@@ -1,0 +1,32 @@
+<div fxLayout="column" fxLayoutAlign="center center" class="fade-in heightFull background-base">
+    <img class="logo--width" src="assets/images/mughub_logo_horizontal_onDark.png">
+    <p class="login-text">Login to MUG student portal</p>
+    <br>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="center center">
+      <mat-form-field floatLabel="never" class="auth-input" fxLayoutAlign="start start">
+        <input matInput formControlName="username" type="text" placeholder="Username" class="auth-input-field" fxLayoutAlign="center center">
+        <span matPrefix><i class="material-icons auth-input-field-icon" fxLayoutAlign="center center">person</i></span>
+      </mat-form-field>
+      <mat-form-field floatLabel="never" class="auth-input" fxLayoutAlign="start start">
+        <input matInput id="pass-input" formControlName="password" type="password" placeholder="Password" class="auth-input-field" fxLayoutAlign="center center">
+        <span matPrefix><i class="material-icons auth-input-field-icon" fxLayoutAlign="center center">lock</i></span>
+        <span matSuffix class="auth-input-field-forgot" (click)="showPassword()"
+          matTooltip="{{ passwordTooltip }}"
+          [matTooltipPosition]="'above'"
+          matTooltipHideDelay="1000"
+          aria-label="show password">
+          <i class="material-icons" style="color: #eee; font-size: 20px">remove_red_eye</i>
+        </span>
+      </mat-form-field>
+      <button mat-raised-button color="accent" type="submit" class="action-button">LOGIN</button>
+      <br>
+      <p class="auth-switch-prompt" #tooltip="matTooltip"
+          matTooltip="Contact someone@m-u-g.org."
+          matTooltipClass="forgot-tooltip"
+          [matTooltipPosition]="'below'"
+          matTooltipHideDelay="10000"
+          aria-label="forgot credentials">
+          Forgot username or password?
+      </p>
+    </form>
+</div>
