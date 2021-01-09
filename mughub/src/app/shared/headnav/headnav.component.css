@@ -1,0 +1,21 @@
+.headnav {
+  background-color: #eee;
+  color: grey;
+  font-family: 'Montserrat', sans-serif;
+  font-size:  16px;
+  font-weight: 500;
+  padding: 0px 25px;
+}
+
+.sidenav-toggle-btn {
+  cursor: pointer;
+}
+
+.btn-active {
+  color: #de6600;
+  cursor: pointer;
+}
+
+.btn-disabled {
+  color: #D1CFCF;
+}
