@@ -4,7 +4,7 @@
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
 
 body {
-	font-family: 'Montserrat', sans-serif !important; 
+	font-family: 'Montserrat', sans-serif !important;
 }
 
 /* common app css classes */
@@ -38,6 +38,28 @@ body {
 
 .paddingNone {
 	padding: 0 !important;
+}
+
+.gutter {
+  padding: 65px !important;
+}
+
+@media only screen and (max-width: 1000px) {
+  .gutter {
+    padding: 25px !important;
+  }
+}
+
+.section-title {
+  color: grey;
+  font-weight: 500;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.content-icon {
+  padding-right: 10px;
+  vertical-align: middle;
 }
 
 .marginNone {

@@ -33,7 +33,7 @@
 .sideDrawer-link-icon {
   color: #eee;
   margin-right: 20px;
-  font-size: 20px;
+  font-size: 21px;
 }
 
 .sideDrawer-links-text {
@@ -45,13 +45,6 @@
   color: #2b5570; */
   text-decoration: underline;
 }
-
-/* ::ng-deep .mat-typography p {
-  margin-bottom: 0;
-} */
-/* ::ng-deep .mat-list-item-content {
-  padding: 0px 80px !important;
-} */
 
 .logo {
   width: 180px;

@@ -18,7 +18,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
-//Firebase Credentials 
+//Firebase Credentials
 const firebaseConfig = {
   apiKey: "AIzaSyAc5YqLrFdZ2h00dTwS-9Y19qXaiFz86m8",
   authDomain: "mughub-8a92e.firebaseapp.com",
@@ -31,7 +31,7 @@ const firebaseConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent, 
+    AppComponent,
     AuthComponent
   ],
   imports: [
@@ -39,7 +39,7 @@ const firebaseConfig = {
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialComponentsModule,
-    FormsMaterialComponentsModule, 
+    FormsMaterialComponentsModule,
     MatTooltipModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
