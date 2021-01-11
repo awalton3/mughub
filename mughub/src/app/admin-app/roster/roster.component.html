@@ -5,7 +5,7 @@
 <mat-drawer-container [hasBackdrop]="false" class="heightFull">
 
   <mat-drawer #editor mode="over" position="end" opened="false" class="side-content-drawer">
-    yooooo
+    <roster-add (onDrawerClose)="editor.close()"></roster-add>
   </mat-drawer>
 
   <mat-drawer-content class="background-eee heightFull">

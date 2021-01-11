@@ -10,10 +10,11 @@ import { MaterialComponentsModule } from 'src/app/shared/angular-material/materi
 import { MatTableModule } from '@angular/material/table';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
+import { RosterAddComponent } from './roster-add/roster-add.component';
 
 
 @NgModule({
-  declarations: [RosterComponent],
+  declarations: [RosterComponent, RosterAddComponent],
   imports: [
     CommonModule,
     RosterRoutingModule,

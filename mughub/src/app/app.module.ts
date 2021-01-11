@@ -7,8 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MaterialComponentsModule } from './shared/angular-material/material-components.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
 import { FormsMaterialComponentsModule } from './shared/angular-material/forms-material-components.module';
+import { SnackBarModule } from 'src/app/shared/snack-bar/snack-bar.module';
 
 import { AuthComponent } from './auth/auth.component';
 
@@ -35,12 +35,13 @@ const firebaseConfig = {
     AuthComponent
   ],
   imports: [
-    BrowserModule,
+  BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialComponentsModule,
     FormsMaterialComponentsModule,
     MatTooltipModule,
+    SnackBarModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
     AngularFireStorageModule,

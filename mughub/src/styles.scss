@@ -40,6 +40,10 @@ body {
 	padding: 0 !important;
 }
 
+.gutter-sm {
+  padding: 5px 30px !important;
+}
+
 .gutter {
   padding: 65px !important;
 }
@@ -199,7 +203,7 @@ body {
 	width: 500px !important;
 	height: 100% !important;
 	background-color: #eee !important;
-	color: grey !important;
+  color: grey !important;
 }
 
 @media only screen and (max-width: 500px) {
