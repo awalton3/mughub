@@ -1,1 +1,9 @@
-<p>student-app works!</p>
+<mat-drawer-container class="heightFull">
+  <mat-drawer #navDrawer class="sidenav">
+    <mughub-sidenav (closeNav)="navDrawer.close()"></mughub-sidenav>
+  </mat-drawer>
+  <mat-drawer-content *ngIf="!loading" class="background-eee paddingNone">
+    yooo
+  </mat-drawer-content>
+</mat-drawer-container>
+<div *ngIf="loading" class=loader>loading...</div>

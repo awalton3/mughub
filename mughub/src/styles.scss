@@ -55,7 +55,7 @@ body {
 }
 
 .section-title {
-  color: grey;
+  color: #30546c;
   font-weight: 500;
   font-size: 16px;
   font-family: 'Montserrat', sans-serif;
@@ -99,7 +99,7 @@ body {
 
 .action-button-stroked {
 	font-family: 'Montserrat', sans-serif !important;
-	line-height: 30px !important;
+  line-height: 30px !important;
 }
 
 .btn-active {
@@ -305,7 +305,7 @@ body {
 	font-family: 'Montserrat', sans-serif !important;
 	font-size: 14px !important;
 	font-weight: 500 !important;
-	color: grey !important;
+	color: #30546c !important;
 	margin: 5px 0 0 0 !important;
 }
 
@@ -317,12 +317,27 @@ body {
 	line-height: 20px !important;
 }
 
+.drawer-form-input-disabled {
+	font-family: 'Montserrat', sans-serif !important;
+	color: grey !important;
+	font-size: 14px !important;
+	font-weight: 400 !important;
+	line-height: 20px !important;
+}
+
 .drawer-form-text {
 	font-family: 'Montserrat', sans-serif !important;
 	font-size: 15px !important;
 	line-height: 22px !important;
 	font-weight: 400 !important;
-	color: grey;
+	color: black;
+}
+
+.drawer-form-icon {
+  vertical-align: middle;
+  font-size: 20px;
+  padding-right: 8px;
+  color: #30546c;
 }
 
 .chip {
@@ -416,4 +431,8 @@ body {
 		box-shadow: 0 -2em;
 		height: 5em;
 	}
+}
+
+.mat-button-focus-overlay {
+  background-color: transparent!important;
 }

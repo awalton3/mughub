@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { AuthService } from './auth.service';
+import { SnackBarService } from '../shared/snack-bar/snack-bar.service';
 
 @Component({
   selector: 'app-auth',
@@ -8,19 +10,16 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 })
 export class AuthComponent implements OnInit {
 
-  loginForm: FormGroup;
-  passwordTooltip: string = "Show Password"; 
-  constructor() { }
+  passwordTooltip: string = "Show Password";
+  loginForm = new FormGroup({
+    'username': new FormControl(null, [Validators.required]),
+    'password': new FormControl(null, [Validators.required])
+  });
+
+  constructor(private authService: AuthService, private snackbarService: SnackBarService) { }
 
   ngOnInit(): void {
-    this.initForm()
-  }
 
-  private initForm() {
-    this.loginForm = new FormGroup({
-      'username': new FormControl(null, [Validators.required]),
-      'password': new FormControl(null, [Validators.required])
-    });
   }
 
   showPassword() {
@@ -32,6 +31,15 @@ export class AuthComponent implements OnInit {
       document.getElementById('pass-input').attributes['type'].value = 'password'
       this.passwordTooltip = "Show Password"
     }
+  }
+
+  onSubmit() {
+    this.authService.login(this.loginForm.value.username, this.loginForm.value.password)
+      // .then(user => {
+      //   //get user info from user collection using uid
+      //   //create session in session storage
+      //   //this.authService.createUserSession()
+      // }).catch(error => this.authService.handleError(error)) //maybe snackbar should last longer
   }
 
   // setRedirectUrl() {
@@ -48,7 +56,4 @@ export class AuthComponent implements OnInit {
     //   user.isNewUser ? this.router.navigate(['mughub/welcome']) : this.router.navigate(['mughub', user.type]);
   }
 
-  onSubmit() {
-    //this.authService.login(this.loginForm.value, this.redirectUrl);
-  }
 }

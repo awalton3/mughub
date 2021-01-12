@@ -17,9 +17,9 @@ export class SidenavComponent implements OnInit, OnDestroy {
   // defaultNavLinks = ['inbox', 'uploads', 'manage', 'hour-log', 'settings'];
   defaultNavLinks = {};
   defaultNavLinksArr = [];
-  selectedSublink: string = '';
-  showSubLinks: boolean;
-  //user: User;
+  //selectedSublink: string = '';
+  //showSubLinks: boolean;
+  user: any;
 
   screenWidth: any;
 
@@ -31,8 +31,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   constructor(/*private userService: UserService,*/ private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    //this.user = this.userService.getUserSession();
-    //this.listenForUser();
+    this.user = JSON.parse(sessionStorage.getItem('user'));
     this.getDefaultNavLinks();
     this.defaultNavLinksArr = Object.keys(this.defaultNavLinks);
     this.screenWidth = window.innerWidth;
@@ -50,7 +49,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
       'Assignments': [],
       'Website': []
     }
-    this.showSubLinks = false
+    //this.showSubLinks = false
     // if (this.user.type === 'tutor') {
     //   this.defaultNavLinks = {
     //     'mail': ['inbox', 'sent', 'drafts', 'trash'],
@@ -100,15 +99,15 @@ export class SidenavComponent implements OnInit, OnDestroy {
     // }
   }
 
-  navigateToSublink(sublink: string) {
-    this.showSubLinks = false;
-    this.router.navigate(['mail'], { relativeTo: this.route, queryParams: { reqDest: sublink } });
-  }
+  // navigateToSublink(sublink: string) {
+  //   this.showSubLinks = false;
+  //   this.router.navigate(['mail'], { relativeTo: this.route, queryParams: { reqDest: sublink } });
+  // }
 
-  toggleSubLinks(link: string) {
-    if (link === 'mail')
-      this.showSubLinks = !this.showSubLinks;
-  }
+  // toggleSubLinks(link: string) {
+  //   if (link === 'mail')
+  //     this.showSubLinks = !this.showSubLinks;
+  // }
 
   onClose() {
     this.closeNav.next();

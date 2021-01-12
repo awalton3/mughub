@@ -17,6 +17,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import firebase from 'firebase/app';
 
 //Firebase Credentials
 const firebaseConfig = {
@@ -28,6 +29,7 @@ const firebaseConfig = {
   appId: "1:1081972173425:web:898811afd01f66fbbe89d0",
   measurementId: "G-RB10CD35RC"
 };
+export const app = firebase.initializeApp(firebaseConfig);
 
 @NgModule({
   declarations: [
@@ -42,7 +44,7 @@ const firebaseConfig = {
     FormsMaterialComponentsModule,
     MatTooltipModule,
     SnackBarModule,
-    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule

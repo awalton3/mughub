@@ -1,5 +1,5 @@
 <mughub-headnav
-title="{{ studentData ? 'Edit student' : 'Add student' }}"
+title="{{ isEditMode ? 'Edit student' : 'Add student' }}"
 iconLeft="close"
 (leftIconToggled)="closeDrawer()"
 iconRight="done"
@@ -11,39 +11,52 @@ iconRight="done"
 
     <!-- Profile Info -->
     <p class="drawer-form-label" style="vertical-align: middle;">
-      <i class="material-icons content-icon">person</i>
+      <i class="material-icons drawer-form-icon">person</i>
       {{'Profile' | uppercase }}
     </p>
+    <br>
     <div fxLayout="row" fxLayoutAlign="center center">
-      <mat-form-field floatLabel="never" class="widthHalfPer">
+      <mat-form-field  class="widthHalfPer">
         <input type="text" matInput formControlName="firstName" placeholder="First name" class="drawer-form-input">
       </mat-form-field>
-      <mat-form-field floatLabel="never" class="widthHalfPer">
+      <mat-form-field class="widthHalfPer">
         <input type="text" matInput formControlName="lastName" placeholder="Last name" class="drawer-form-input">
       </mat-form-field>
     </div>
-    <mat-form-field floatLabel="never" fxFill>
-      <input type="text" matInput formControlName="subjects" placeholder="Subject" class="drawer-form-input">
+    <mat-form-field fxFill>
+      <input type="text" matInput formControlName="subjects" placeholder="Subjects" class="drawer-form-input">
     </mat-form-field>
 
     <br><br>
 
     <!-- Login Credentials  -->
     <p class="drawer-form-label">
-      <i class="material-icons content-icon">lock</i>
-      {{'Credentials' | uppercase}}
+      <i class="material-icons drawer-form-icon">lock</i>
+      {{'credentials' | uppercase}}
     </p>
+    <!-- <div fxLayout="row" fxLayoutAlign="start center">
+      <i class="material-icons drawer-form-icon" fxLayout="row" fxLayoutAlign="center center">lock</i>
+      <p class="drawer-form-label" fxLayout="row" fxLayoutAlign="center center">{{'Credentials' | uppercase}}</p>
+    </div > -->
+    <br>
+    <p *ngIf="!isEditMode">*A username will be automatically generated</p>
+    <!-- <p *ngIf="isEditMode">Username: {{ studentToEdit.username }}</p> -->
+
+    <mat-form-field  *ngIf="isEditMode" fxFill>
+        <input type="text" matInput placeholder="Username (Cannot be changed)" class="drawer-form-input-disabled" value="{{ studentToEdit.username }}" disabled>
+    </mat-form-field>
+
     <div fxLayout="row" fxLayoutAlign="center center">
-      <mat-form-field floatLabel="never" class="widthHalfPer">
-        <input type="text" matInput formControlName="username" placeholder="Username" class="drawer-form-input">
+      <mat-form-field class="widthHalfPer">
+        <input type="text" matInput formControlName="email" placeholder="Email (optional)" class="drawer-form-input">
       </mat-form-field>
-      <mat-form-field floatLabel="never" class="widthHalfPer">
+      <mat-form-field class="widthHalfPer">
         <input type="text" matInput formControlName="password" placeholder="Password" class="drawer-form-input">
       </mat-form-field>
     </div>
-    <mat-form-field floatLabel="never" fxFill>
+    <!-- <mat-form-field fxFill>
       <input type="text" matInput formControlName="email" placeholder="Email (optional)" class="drawer-form-input">
-    </mat-form-field>
+    </mat-form-field> -->
 
   </form>
 </div>
