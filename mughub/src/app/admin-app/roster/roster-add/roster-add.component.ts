@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -13,20 +13,29 @@ export class RosterAddComponent implements OnInit {
 
   @Output() onDrawerClose = new Subject();
 
-  studentForm: FormGroup = new FormGroup({
-    'firstName': new FormControl(null, Validators.required),
-    'lastName': new FormControl(null, Validators.required),
-    'email': new FormControl(null, Validators.email),
-    'subjects': new FormControl(null, Validators.required),
-    // 'username': new FormControl(null, Validators.required),
-    'password': new FormControl(null, [Validators.required, Validators.minLength(6)])
-  })
+  studentForm: FormGroup;
+  // subjectForm: FormGroup;
   isEditMode = false;
   studentToEdit: Student;
+  subjects: Array<{ subject: string, tutor: string }> = [];
+  @ViewChild('subjectName') subjectNameInput: ElementRef;
+  @ViewChild('subjectTutor') subjectTutorInput: ElementRef;
 
   constructor(
     private authService: AuthService,
-    private rosterService: RosterService) { }
+    private rosterService: RosterService) {
+      this.studentForm = new FormGroup({
+        'firstName': new FormControl(null, Validators.required),
+        'lastName': new FormControl(null, Validators.required),
+        'email': new FormControl(null, Validators.email),
+        // 'subjects': new FormControl(null, Validators.required),
+        'password': new FormControl(null, [Validators.required, Validators.minLength(6)])
+      })
+      // this.subjectForm = new FormGroup({
+      //   'subject': new FormGroup(null, Validators.required),
+      //   'tutor': new FormGroup(null, Validators.required)
+      // })
+    }
 
   ngOnInit(): void {
     this.listenForEditRequests();
@@ -37,11 +46,13 @@ export class RosterAddComponent implements OnInit {
       this.studentToEdit = Object.assign({}, student)
       this.isEditMode = true
       this.studentForm.patchValue(student)
+      this.subjects = student.subjects
     })
   }
 
   addStudent() {
-    this.authService.registerStudent(this.studentForm.value)
+    let subjects = { subjects: this.subjects }
+    this.authService.registerStudent({ ...this.studentForm.value, ...subjects })
       .then(onSuccess => {
         this.authService.onSuccess("Student added to roster")
         this.closeDrawer()
@@ -52,78 +63,41 @@ export class RosterAddComponent implements OnInit {
   editStudent() {
       this.authService.getUserByUsername(this.studentToEdit.username)
         .then(userObj => {
-          this.authService.editUserInFirestore(userObj.docs[0].id, this.studentForm.value)
+          let subjects = { subjects: this.subjects }
+          this.authService.editUserInFirestore(userObj.docs[0].id, {...this.studentForm.value, ...subjects})
           this.authService.onSuccess("Student successfully updated")
           this.closeDrawer()
         })
         .catch(error => console.log(error)) //need more action here
   }
 
+  addSubject() {
+    //Check if fields are empty
+    let subjectName = this.subjectNameInput.nativeElement.value
+    let subjectTutor = this.subjectTutorInput.nativeElement.value
+    if (!subjectName || !subjectTutor) return;
+    //Add subjects to array
+    this.subjects.push({
+      subject: subjectName,
+      tutor: subjectTutor
+    })
+    //Reset fields
+    this.subjectNameInput.nativeElement.value = ""
+    this.subjectTutorInput.nativeElement.value = ""
+  }
+
+  removeSubject(idx) {
+    this.subjects.splice(idx, 1)
+  }
+
   closeDrawer() {
     this.isEditMode = false
     this.onDrawerClose.next()
     this.studentForm.reset()
+    this.subjects = []
   }
 
   updateRoster() {
-
     this.isEditMode ? this.editStudent() : this.addStudent()
-
-    //Get username
-    // this.recommendUsername(form.firstName, form.lastName)
-    //   .then(username => {
-
-    //     let usernameObj = { username: username }
-
-    //     // Register new user
-    //     this.authService.register(username, form.password)
-    //       .then(user => {
-    //         this.updateUserCollection(user.user.uid, { ...form, ...userType, ...usernameObj })
-    //       })
-    //       .catch(error => {
-    //         // Update exisiting user
-    //         if (error.code == 'auth/email-already-in-use') {
-    //           this.authService.getUserByUsername(form.username)
-    //             .then(userObj => this.updateUserCollection(userObj.docs[0].id, { ...form, ...userType }));
-    //         }
-    //       })
-    //   }).catch(error => console.log(error))
   }
-
-  // updateUserCollection(uid, userData) {
-  //   this.authService.editUserCollect(uid, userData)
-  //     .then(() => {
-  //       this.closeDrawer();
-  //       this.snackbarService.onOpenSnackBar.next({ message: "Roster Updated", isError: false })
-  //     }).catch(error => console.log(error))
-  // }
-
-  // recommendUsername(firstname, lastname) {
-  //   let name = firstname + lastname;
-  //   return this.rosterService.getStudentsOrderByUsername(name)
-  //     .then(matches => {
-  //       if (matches.docs.length == 0)
-  //         return Promise.resolve(name)
-  //       let nums = matches.docs.map(match => {
-  //         return Number(match.data().username.substring(name.length))
-  //       })
-  //       //this.recommendUsername = name + (Math.max(...nums) + 1)
-  //       return Promise.resolve(name + (Math.max(...nums) + 1))
-  //     }).catch(error => { return Promise.reject() })
-  // }
-
-
-
-
-    // prefillForm(student) {
-  //   this.studentForm.patchValue(student)
-  //   // delete student['type']
-  //   // Object.keys(student).forEach(key => {
-  //   //   if (key in this.studentForm) {
-  //   //     this.studentForm.get(key).setValue(student[key]);
-  //   //   }
-  //   // });
-  // }
-
-
 }

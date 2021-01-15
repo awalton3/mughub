@@ -5,6 +5,13 @@ tr.mat-row:hover {
   cursor: pointer;
 }
 
+.col-width {
+  display:inline-block;
+  min-width: 100px;
+  max-width: 200px;
+  width: auto;
+}
+
 :host ::ng-deep .mat-stroked-button {
   border: 1px solid #ea9103 !important;
 }

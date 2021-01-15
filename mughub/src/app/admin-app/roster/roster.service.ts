@@ -12,7 +12,7 @@ export interface Student {
   lastName: string,
   username: string,
   password: string,
-  subjects: string,
+  subjects: Array<{ subject: string, tutor: string }>,
   email: string
 }
 
@@ -40,7 +40,5 @@ export class RosterService {
   getStudentsOrderByUsername(name: string) {
     return ref.orderBy('username').startAt(name).endAt(name+"\uf8ff").get()
   }
-
-
 
 }

@@ -144,6 +144,7 @@ export class AuthService {
   }
 
   registerStudent(student: Student) {
+    console.log(student);
     let base = (student.firstName + student.lastName).toLowerCase()
     return this.generateUsername(base)
       .then(username => {
@@ -155,19 +156,4 @@ export class AuthService {
         }).catch(error => Promise.reject(error))
       }).catch(error => Promise.reject(error))
   }
-
-
-  // recommendUsername(firstname, lastname) {
-  //   let name = firstname + lastname;
-  //   return this.rosterService.getStudentsOrderByUsername(name)
-  //     .then(matches => {
-  //       if (matches.docs.length == 0)
-  //         return Promise.resolve(name)
-  //       let nums = matches.docs.map(match => {
-  //         return Number(match.data().username.substring(name.length))
-  //       })
-  //       //this.recommendUsername = name + (Math.max(...nums) + 1)
-  //       return Promise.resolve(name + (Math.max(...nums) + 1))
-  //     }).catch(error => { return Promise.reject() })
-  // }
 }

@@ -7,14 +7,13 @@ iconRight="done"
 [enableIconRight]="studentForm.valid"></mughub-headnav>
 
 <div class="gutter-sm">
-  <form [formGroup]="studentForm">
+  <form *ngIf="studentForm" [formGroup]="studentForm">
 
     <!-- Profile Info -->
     <p class="drawer-form-label" style="vertical-align: middle;">
       <i class="material-icons drawer-form-icon">person</i>
       {{'Profile' | uppercase }}
     </p>
-    <br>
     <div fxLayout="row" fxLayoutAlign="center center">
       <mat-form-field  class="widthHalfPer">
         <input type="text" matInput formControlName="firstName" placeholder="First name" class="drawer-form-input">
@@ -23,11 +22,49 @@ iconRight="done"
         <input type="text" matInput formControlName="lastName" placeholder="Last name" class="drawer-form-input">
       </mat-form-field>
     </div>
-    <mat-form-field fxFill>
+    <!-- <mat-form-field fxFill>
       <input type="text" matInput formControlName="subjects" placeholder="Subjects" class="drawer-form-input">
-    </mat-form-field>
+    </mat-form-field> -->
+    <!-- <app-input-autocomplete formControlName="subjects" [formLabel]="'Subject'"></app-input-autocomplete> -->
 
-    <br><br>
+    <br>
+
+    <!-- Subjects -->
+    <p class="drawer-form-label" style="vertical-align: middle;">
+      <i class="material-icons drawer-form-icon">school</i>
+      {{'School Subjects' | uppercase }}
+    </p>
+    <div fxLayout="column" fxLayoutAlign="start center">
+      <br *ngIf="subjects.length">
+      <mat-card *ngFor="let subject of subjects; let idx = index" class="widthFullPer drawer-list-item background-eee" fxLayout="row" fxLayoutAlign="space-between center">
+        <span>{{ subject.subject }} ({{ subject.tutor }})</span>
+        <i
+        (click)="removeSubject(idx)"
+        class="material-icons cursor-pointer"
+        style="color: red;"
+        matRipple
+        [matRippleCentered]="centered">close</i>
+      </mat-card>
+    </div>
+
+    <br>
+
+    <!-- Add a subject -->
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div style="width: 80%">
+        <mat-form-field class="widthHalfPer">
+          <input #subjectName type="text" matInput placeholder="Subject" class="drawer-form-input">
+        </mat-form-field>
+        <mat-form-field class="widthHalfPer">
+          <input #subjectTutor type="text" matInput placeholder="Tutor" class="drawer-form-input">
+        </mat-form-field>
+      </div>
+      <button (click)="addSubject()" class="action-button-stroked" color="accent" mat-stroked-button>
+        <span>ADD</span>
+      </button>
+    </div>
+
+    <br>
 
     <!-- Login Credentials  -->
     <p class="drawer-form-label">
@@ -54,6 +91,7 @@ iconRight="done"
         <input type="text" matInput formControlName="password" placeholder="Password" class="drawer-form-input">
       </mat-form-field>
     </div>
+
     <!-- <mat-form-field fxFill>
       <input type="text" matInput formControlName="email" placeholder="Email (optional)" class="drawer-form-input">
     </mat-form-field> -->

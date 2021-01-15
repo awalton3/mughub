@@ -5,13 +5,13 @@
 }
 
 .profile-name {
-  color: #eee;
+  color: #ffffff;
   font-size: 19px;
   font-weight: 500;
 }
 
 .sideDrawer-links {
-  color: #eee;
+  color: #ffffff;
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
   padding-left: 55px;
@@ -22,7 +22,7 @@
 }
 
 .sideDrawer-sublinks {
-  color: #eee;
+  color: #ffffff;
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -31,7 +31,7 @@
 }
 
 .sideDrawer-link-icon {
-  color: #eee;
+  color: #ffffff;
   margin-right: 20px;
   font-size: 21px;
 }
@@ -41,7 +41,7 @@
 }
 
 .link-active {
-  /* background-color: #eee;
+  /* background-color: #ffffff;
   color: #2b5570; */
   text-decoration: underline;
 }

@@ -32,6 +32,11 @@ body {
 	background-color: #eee !important;
 }
 
+.background-white {
+	background-color: #ffffff !important;
+}
+
+
 .background-base {
 	background-color: #30546c !important;
 }
@@ -46,6 +51,10 @@ body {
 
 .gutter {
   padding: 65px !important;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -202,8 +211,8 @@ body {
 .side-content-drawer {
 	width: 500px !important;
 	height: 100% !important;
-	background-color: #eee !important;
-  color: grey !important;
+	background-color: #ffffff !important;
+  color: black !important;
 }
 
 @media only screen and (max-width: 500px) {
@@ -338,6 +347,12 @@ body {
   font-size: 20px;
   padding-right: 8px;
   color: #30546c;
+}
+
+.drawer-list-item {
+  margin: 5px !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 400 !important;
 }
 
 .chip {

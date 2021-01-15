@@ -22,7 +22,7 @@ export class RosterComponent implements OnInit, OnDestroy {
   @ViewChild('editor', { static: false }) editor: any;
 
   private subs = new Subscription();
-  displayedColumns: string[] = ['name', 'username', 'password', 'email', 'subjects'];
+  displayedColumns: string[] = ['name', 'username', 'password'];
   dataSource: any;
   editorData: any;
 
@@ -40,7 +40,7 @@ export class RosterComponent implements OnInit, OnDestroy {
   // }
 
   editStudent(student: Student) {
-    //inform drawer component of edit request
+    //send drawer component the data to edit
     this.rosterService.onEditStudent.next(student)
     this.editor.open()
   }
