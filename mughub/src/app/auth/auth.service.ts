@@ -149,7 +149,7 @@ export class AuthService {
     return this.generateUsername(base)
       .then(username => {
         this.registerInAuth(username, student.password).then(userObj => {
-          let other = { type: 'student', username: username }
+          let other = { type: 'student', username: username, active: true }
           this.createUserInFirestore(userObj.user.uid, { ...student, ...other })
             .then(() => Promise.resolve())
             .catch(error => Promise.reject(error))
