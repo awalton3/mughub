@@ -21,9 +21,9 @@ export class RosterTableComponent implements OnInit {
     console.log("Table data: ", this.data);
   }
 
-  onEditStudent() {
-    this.onRowClick.next()
-  }
+  // onEditStudent() {
+  //   this.onRowClick.next()
+  // }
 
   // editStudent(student) {
   //   console.log(student)

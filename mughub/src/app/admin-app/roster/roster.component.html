@@ -37,7 +37,7 @@
         </button>
       </div>
 
-      <app-roster-table *ngIf="dataSource" [data]="dataSource" [displayedColumns]="displayedColumns" (onRowClick)="testing($event)" class="widthFullPer"></app-roster-table>
+      <app-roster-table *ngIf="dataSource" [data]="dataSource" [displayedColumns]="displayedColumns" (onRowClick)="editStudent($event)" class="widthFullPer"></app-roster-table>
 
       <!-- <table *ngIf="dataSource && dataSource.data.length" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 widthFullPer">
 
