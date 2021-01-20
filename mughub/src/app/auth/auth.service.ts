@@ -26,6 +26,10 @@ export class AuthService {
         this.getUserFromFireCollect(userObj.user.uid)
           .then(userData => {
             let user = Object.assign({}, userData.data())
+            if (user.active == false) {
+              this.handleError('auth/user-disabled')
+              window.location.reload()
+            }
             delete user.password
             this.createUserSession(user)
             this.router.navigate([user.type]);
