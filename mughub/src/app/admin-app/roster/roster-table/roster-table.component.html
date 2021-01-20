@@ -2,7 +2,7 @@
 
   <ng-container *ngFor="let column of displayedColumns" matColumnDef="{{ column }}">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</th>
-    <td mat-cell *matCellDef="let element">{{ element[column] }}
+    <td [ngStyle]="{'color':element.active === true ? 'black' : 'red'}" mat-cell *matCellDef="let element">{{ element[column] }}
     </td>
   </ng-container>
 
