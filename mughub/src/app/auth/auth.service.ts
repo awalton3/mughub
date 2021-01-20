@@ -152,6 +152,7 @@ export class AuthService {
     let base = (student.firstName + student.lastName).toLowerCase()
     return this.generateUsername(base)
       .then(username => {
+        console.log(username)
         this.registerInAuth(username, student.password).then(userObj => {
           let other = { type: 'student', username: username, active: true }
           this.createUserInFirestore(userObj.user.uid, { ...student, ...other })

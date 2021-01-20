@@ -32,10 +32,6 @@ export class RosterAddComponent implements OnInit {
         'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
         'active': new FormControl(null)
       })
-      // this.subjectForm = new FormGroup({
-      //   'subject': new FormGroup(null, Validators.required),
-      //   'tutor': new FormGroup(null, Validators.required)
-      // })
     }
 
   ngOnInit(): void {
@@ -63,14 +59,14 @@ export class RosterAddComponent implements OnInit {
   }
 
   editStudent() {
-      this.authService.getUserByUsername(this.studentToEdit.username)
-        .then(userObj => {
-          let subjects = { subjects: this.subjects }
-          this.authService.editUserInFirestore(userObj.docs[0].id, {...this.studentForm.value, ...subjects})
-          this.authService.onSuccess("Student successfully updated")
-          this.closeDrawer()
-        })
-        .catch(error => console.log(error)) //need more action here
+    this.authService.getUserByUsername(this.studentToEdit.username)
+      .then(userObj => {
+        let subjects = { subjects: this.subjects }
+        this.authService.editUserInFirestore(userObj.docs[0].id, {...this.studentForm.value, ...subjects})
+        this.authService.onSuccess("Student successfully updated")
+        this.closeDrawer()
+      })
+      .catch(error => console.log(error)) //need more action here
   }
 
   addSubject() {
