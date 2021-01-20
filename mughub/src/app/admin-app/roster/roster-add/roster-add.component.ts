@@ -28,7 +28,9 @@ export class RosterAddComponent implements OnInit {
         'firstName': new FormControl(null, Validators.required),
         'lastName': new FormControl(null, Validators.required),
         'email': new FormControl(null, Validators.email),
-        'password': new FormControl(null, [Validators.required, Validators.minLength(6)])
+        // 'subjects': new FormControl(null, Validators.required),
+        'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
+        'active': new FormControl(null)
       })
     }
 
@@ -42,6 +44,7 @@ export class RosterAddComponent implements OnInit {
       this.isEditMode = true
       this.studentForm.patchValue(student)
       this.subjects = student.subjects
+      console.log(this.studentForm.value)
     })
   }
 
