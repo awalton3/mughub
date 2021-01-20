@@ -20,6 +20,7 @@ export class AdminAppComponent implements OnInit {
   }
 
   loading: boolean = true;
+  views = [ { name: 'Roster', icon: 'groups' }, { name: 'Resources', icon: 'school' } ]
 
   constructor(private sidenavService: SidenavService, private router: Router) {
     router.events.subscribe(event => {
