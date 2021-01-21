@@ -13,11 +13,12 @@ import { MatSortModule } from '@angular/material/sort';
 import { RosterAddComponent } from './roster-add/roster-add.component';
 import { InputAutocompleteComponent } from 'src/app/shared/input-autocomplete/input-autocomplete.component';
 import { MatCardModule } from '@angular/material/card';
-
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [RosterComponent, RosterAddComponent, InputAutocompleteComponent],
   imports: [
+    MatSelectModule,
     CommonModule,
     RosterRoutingModule,
     HeadnavModule,

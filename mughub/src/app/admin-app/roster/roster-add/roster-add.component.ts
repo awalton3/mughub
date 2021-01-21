@@ -24,18 +24,23 @@ export class RosterAddComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private rosterService: RosterService) {
-      this.studentForm = new FormGroup({
-        'firstName': new FormControl(null, Validators.required),
-        'lastName': new FormControl(null, Validators.required),
-        'email': new FormControl(null, Validators.email),
-        // 'subjects': new FormControl(null, Validators.required),
-        'password': new FormControl(null, [Validators.required, Validators.minLength(6)])
-      })
-      // this.subjectForm = new FormGroup({
-      //   'subject': new FormGroup(null, Validators.required),
-      //   'tutor': new FormGroup(null, Validators.required)
-      // })
-    }
+    this.studentForm = new FormGroup({
+      'firstName': new FormControl(null, Validators.required),
+      'lastName': new FormControl(null, Validators.required),
+      'email': new FormControl(null, Validators.email),
+      // 'subjects': new FormControl(null, Validators.required),
+      'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
+      'parentFirstName': new FormControl(null, Validators.required),
+      'parentLastName': new FormControl(null, Validators.required),
+      'parentEmail': new FormControl(null, Validators.email),
+      'gradeLevel': new FormControl(null),
+      // 'phone': new FormControl(null, [Validators.required, Validators.pattern("[0-9]{10}")])
+    })
+    // this.subjectForm = new FormGroup({
+    //   'subject': new FormGroup(null, Validators.required),
+    //   'tutor': new FormGroup(null, Validators.required)
+    // })
+  }
 
   ngOnInit(): void {
     this.listenForEditRequests();
@@ -61,14 +66,14 @@ export class RosterAddComponent implements OnInit {
   }
 
   editStudent() {
-      this.authService.getUserByUsername(this.studentToEdit.username)
-        .then(userObj => {
-          let subjects = { subjects: this.subjects }
-          this.authService.editUserInFirestore(userObj.docs[0].id, {...this.studentForm.value, ...subjects})
-          this.authService.onSuccess("Student successfully updated")
-          this.closeDrawer()
-        })
-        .catch(error => console.log(error)) //need more action here
+    this.authService.getUserByUsername(this.studentToEdit.username)
+      .then(userObj => {
+        let subjects = { subjects: this.subjects }
+        this.authService.editUserInFirestore(userObj.docs[0].id, { ...this.studentForm.value, ...subjects })
+        this.authService.onSuccess("Student successfully updated")
+        this.closeDrawer()
+      })
+      .catch(error => console.log(error)) //need more action here
   }
 
   addSubject() {
@@ -98,6 +103,7 @@ export class RosterAddComponent implements OnInit {
   }
 
   updateRoster() {
+    console.log(this.studentForm.value)
     this.isEditMode ? this.editStudent() : this.addStudent()
   }
 }
