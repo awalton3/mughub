@@ -44,7 +44,6 @@ export class RosterAddComponent implements OnInit {
       this.isEditMode = true
       this.studentForm.patchValue(student)
       this.subjects = student.subjects
-      console.log(this.studentForm.value)
     })
   }
 

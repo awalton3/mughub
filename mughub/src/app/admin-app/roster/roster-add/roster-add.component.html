@@ -88,13 +88,9 @@ iconRight="done"
       </mat-form-field>
     </div>
 
-    <div *ngIf="isEditMode" fxLayout="row" fxLayoutAlign="right">
-      <mat-slide-toggle matInput formControlName="active">Active student</mat-slide-toggle>
+    <div *ngIf="isEditMode" fxLayout="row" fxLayoutAlign="right" class="drawer-form-input">
+      <mat-slide-toggle matInput formControlName="active" class="app-font"><span style="vertical-align: middle;">Active student</span></mat-slide-toggle>
     </div>
-
-    <!-- <mat-form-field fxFill>
-      <input type="text" matInput formControlName="email" placeholder="Email (optional)" class="drawer-form-input">
-    </mat-form-field> -->
 
   </form>
 </div>

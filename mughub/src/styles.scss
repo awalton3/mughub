@@ -7,7 +7,7 @@ body {
 	font-family: 'Montserrat', sans-serif !important;
 }
 
-h1, h2, h3, h4, h5, h6 {
+p, h1, h2, h3, h4, h5, h6, span {
   font-family: 'Montserrat', sans-serif !important;
 }
 
@@ -40,7 +40,6 @@ h1, h2, h3, h4, h5, h6 {
 	background-color: #ffffff !important;
 }
 
-
 .background-base {
 	background-color: #30546c !important;
 }
@@ -59,6 +58,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .cursor-pointer {
   cursor: pointer !important;
+}
+
+.app-font {
+  font-family: 'Montserrat', sans-serif !important;
 }
 
 @media only screen and (max-width: 1000px) {
