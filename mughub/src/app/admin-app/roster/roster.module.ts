@@ -11,13 +11,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
 import { RosterAddComponent } from './roster-add/roster-add.component';
-import { InputAutocompleteComponent } from 'src/app/shared/input-autocomplete/input-autocomplete.component';
 import { MatCardModule } from '@angular/material/card';
 import { RosterTableComponent } from './roster-table/roster-table.component';
 
 
 @NgModule({
-  declarations: [RosterComponent, RosterAddComponent, InputAutocompleteComponent, RosterTableComponent],
+  declarations: [RosterComponent, RosterAddComponent, RosterTableComponent],
   imports: [
     CommonModule,
     RosterRoutingModule,
