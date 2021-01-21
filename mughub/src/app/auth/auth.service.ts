@@ -26,6 +26,10 @@ export class AuthService {
         this.getUserFromFireCollect(userObj.user.uid)
           .then(userData => {
             let user = Object.assign({}, userData.data())
+            if (user.active == false) {
+              this.handleError('auth/user-disabled')
+              window.location.reload()
+            }
             delete user.password
             this.createUserSession(user)
             this.router.navigate([user.type]);
@@ -148,8 +152,9 @@ export class AuthService {
     let base = (student.firstName + student.lastName).toLowerCase()
     return this.generateUsername(base)
       .then(username => {
+        console.log(username)
         this.registerInAuth(username, student.password).then(userObj => {
-          let other = { type: 'student', username: username }
+          let other = { type: 'student', username: username, active: true }
           this.createUserInFirestore(userObj.user.uid, { ...student, ...other })
             .then(() => Promise.resolve())
             .catch(error => Promise.reject(error))

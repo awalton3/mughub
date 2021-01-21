@@ -29,10 +29,10 @@
   </div> -->
 
   <div class="widthFullPer" fxLayout="column" fxLayoutAlign="center center">
-    <div *ngFor="let link of defaultNavLinksArr" class="widthFullPer" (click)="navigate(link)" >
+    <div *ngFor="let link of navLinks" class="widthFullPer" (click)="navigate(link.name)" >
       <div fxLayout="row" fxLayoutAlign="start center" class="sideDrawer-links" matRipple>
-        <i class="material-icons sideDrawer-link-icon">{{ getIconLink(link) }}</i>
-        <div fxLayout="row" fxLayoutAlign="center center">{{ link }}</div>
+        <i class="material-icons sideDrawer-link-icon">{{ link.icon }}</i>
+        <div fxLayout="row" fxLayoutAlign="center center">{{ link.name }}</div>
       </div>
     </div>
   </div>

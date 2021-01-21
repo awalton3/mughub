@@ -7,6 +7,10 @@ body {
 	font-family: 'Montserrat', sans-serif !important;
 }
 
+p, h1, h2, h3, h4, h5, h6, span {
+  font-family: 'Montserrat', sans-serif !important;
+}
+
 /* common app css classes */
 .heightFull {
 	height: 100vh !important;
@@ -36,7 +40,6 @@ body {
 	background-color: #ffffff !important;
 }
 
-
 .background-base {
 	background-color: #30546c !important;
 }
@@ -55,6 +58,10 @@ body {
 
 .cursor-pointer {
   cursor: pointer !important;
+}
+
+.app-font {
+  font-family: 'Montserrat', sans-serif !important;
 }
 
 @media only screen and (max-width: 1000px) {

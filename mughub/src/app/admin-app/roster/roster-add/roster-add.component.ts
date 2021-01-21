@@ -24,6 +24,7 @@ export class RosterAddComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private rosterService: RosterService) {
+
     this.studentForm = new FormGroup({
       'firstName': new FormControl(null, Validators.required),
       'lastName': new FormControl(null, Validators.required),
@@ -34,6 +35,7 @@ export class RosterAddComponent implements OnInit {
       'parentLastName': new FormControl(null, Validators.required),
       'parentEmail': new FormControl(null, Validators.email),
       'gradeLevel': new FormControl(null),
+      'active': new FormControl(null)
       // 'phone': new FormControl(null, [Validators.required, Validators.pattern("[0-9]{10}")])
     })
     // this.subjectForm = new FormGroup({
@@ -69,7 +71,7 @@ export class RosterAddComponent implements OnInit {
     this.authService.getUserByUsername(this.studentToEdit.username)
       .then(userObj => {
         let subjects = { subjects: this.subjects }
-        this.authService.editUserInFirestore(userObj.docs[0].id, { ...this.studentForm.value, ...subjects })
+        this.authService.editUserInFirestore(userObj.docs[0].id, {...this.studentForm.value, ...subjects})
         this.authService.onSuccess("Student successfully updated")
         this.closeDrawer()
       })

@@ -5,7 +5,8 @@ import 'firebase/auth';
 import { Observable, Subject } from 'rxjs';
 // import { map } from 'rxjs/operators';
 
-const ref = firebase.firestore().collection('/users')
+const usersRef = firebase.firestore().collection('/users')
+const resourceRef = firebase.firestore().collection('/resources')
 
 export interface Student {
   firstName: string,
@@ -28,7 +29,7 @@ export class RosterService {
 
   getStudents() {
     return new Observable(observer => {
-      const unsubscribe = ref.where("type", "==", "student").onSnapshot(querySnapshot => {
+      const unsubscribe = usersRef.where("type", "==", "student").onSnapshot(querySnapshot => {
         let students = []
         querySnapshot.forEach(doc => students.push(doc.data()))
         observer.next(students)
@@ -38,7 +39,17 @@ export class RosterService {
   }
 
   getStudentsOrderByUsername(name: string) {
-    return ref.orderBy('username').startAt(name).endAt(name+"\uf8ff").get()
+    return usersRef.orderBy('username').startAt(name).endAt(name+"\uf8ff").get()
   }
+
+  // getResources(group: string) {
+  //   return new Observable(observer => {
+  //     const unsubscribe = resourceRef.where("group", "==", group).onSnapshot(querySnapshot => {
+  //     let students = []
+  //     querySnapshot.forEach(doc => students.push(doc.data()))
+  //     observer.next(students)
+  //   })
+  //   return () => { unsubscribe(); }
+  // }
 
 }

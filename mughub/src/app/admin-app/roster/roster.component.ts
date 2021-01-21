@@ -22,12 +22,13 @@ export class RosterComponent implements OnInit, OnDestroy {
   @ViewChild('editor', { static: false }) editor: any;
 
   private subs = new Subscription();
-  displayedColumns: string[] = ['name', 'username', 'password'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'username', 'password'];
   dataSource: any;
+  //testData = [];
   editorData: any;
 
-
   ngOnInit(): void {
+    //this.testData = ['apple', 'orange', 'potato']
     this.subs.add(this.rosterService.getStudents()
       .subscribe((students: Array<Student>) => {
         this.dataSource = new MatTableDataSource(students)
@@ -38,6 +39,10 @@ export class RosterComponent implements OnInit, OnDestroy {
   // ngAfterViewInit() {
   //   this.dataSource.sort = this.sort;
   // }
+
+  testing(event) {
+    console.log(event);
+  }
 
   editStudent(student: Student) {
     //send drawer component the data to edit

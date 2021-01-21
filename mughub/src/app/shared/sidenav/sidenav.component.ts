@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, HostListener, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, HostListener, OnDestroy, Input } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 //import { UserService } from '../auth/user.service';
 //import { User } from '../auth/user.model';
@@ -13,12 +13,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class SidenavComponent implements OnInit, OnDestroy {
 
   private subs = new Subscription();
+  @Input() navLinks: Array<{ name: String, icon: String}>;
   @Output() closeNav = new Subject();
-  // defaultNavLinks = ['inbox', 'uploads', 'manage', 'hour-log', 'settings'];
-  defaultNavLinks = {};
-  defaultNavLinksArr = [];
-  //selectedSublink: string = '';
-  //showSubLinks: boolean;
+  //defaultNavLinks = {};
+  //defaultNavLinksArr = [];
   user: any;
 
   screenWidth: any;
@@ -31,57 +29,52 @@ export class SidenavComponent implements OnInit, OnDestroy {
   constructor(/*private userService: UserService,*/ private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    //console.log(this.navLinks)
     this.user = JSON.parse(sessionStorage.getItem('user'));
-    this.getDefaultNavLinks();
-    this.defaultNavLinksArr = Object.keys(this.defaultNavLinks);
+    // this.getDefaultNavLinks();
+    //this.defaultNavLinksArr = Object.keys(this.defaultNavLinks);
     this.screenWidth = window.innerWidth;
   }
 
-  /*listenForUser() {
-    this.subs.add(this.userService.user.subscribe(user => {
-      this.user = user;
-    }))
-  }*/
+  // getDefaultNavLinks() {
+  //   // this.defaultNavLinks = {
+  //   //   'Roster': [],
+  //   //   'Assignments': [],
+  //   //   'Website': []
+  //   // }
+  //   //this.showSubLinks = false
+  //   // if (this.user.type === 'tutor') {
+  //   //   this.defaultNavLinks = {
+  //   //     'mail': ['inbox', 'sent', 'drafts', 'trash'],
+  //   //     'manage': [],
+  //   //     'hour log': [],
+  //   //     'settings': []
+  //   //   }
+  //   //   this.showSubLinks = false
+  //   // } else {
+  //   //   this.defaultNavLinks = {
+  //   //     'mail': ['inbox', 'sent', 'drafts', 'trash'],
+  //   //     'settings': []
+  //   //   }
+  //   //   this.showSubLinks = true
+  //   // }
+  // }
 
-  getDefaultNavLinks() {
-    this.defaultNavLinks = {
-      'Roster': [],
-      'Assignments': [],
-      'Website': []
-    }
-    //this.showSubLinks = false
-    // if (this.user.type === 'tutor') {
-    //   this.defaultNavLinks = {
-    //     'mail': ['inbox', 'sent', 'drafts', 'trash'],
-    //     'manage': [],
-    //     'hour log': [],
-    //     'settings': []
-    //   }
-    //   this.showSubLinks = false
-    // } else {
-    //   this.defaultNavLinks = {
-    //     'mail': ['inbox', 'sent', 'drafts', 'trash'],
-    //     'settings': []
-    //   }
-    //   this.showSubLinks = true
-    // }
-  }
-
-  getIconLink(link: string): string {
-    switch (link.toLowerCase()) {
-      case 'roster': return 'groups';
-      case 'assignments': return 'assignment';
-      case 'website': return 'web';
-      // case 'mail': return 'mail';
-      // case 'inbox': return 'inbox';
-      // case 'sent': return 'send';
-      // case 'drafts': return 'drafts';
-      // case 'trash': return 'delete';
-      // case 'manage': return 'build';
-      // case 'hour log': return 'schedule';
-      // case 'settings': return 'settings';
-    }
-  }
+  // getIconLink(link: string): string {
+  //   switch (link.toLowerCase()) {
+  //     case 'roster': return 'groups';
+  //     case 'assignments': return 'assignment';
+  //     case 'website': return 'web';
+  //     // case 'mail': return 'mail';
+  //     // case 'inbox': return 'inbox';
+  //     // case 'sent': return 'send';
+  //     // case 'drafts': return 'drafts';
+  //     // case 'trash': return 'delete';
+  //     // case 'manage': return 'build';
+  //     // case 'hour log': return 'schedule';
+  //     // case 'settings': return 'settings';
+  //   }
+  // }
 
   navigate(link: string) {
     this.router.navigate([link.toLowerCase()], {relativeTo: this.route})

@@ -103,13 +103,9 @@ iconRight="done"
       <i class="material-icons drawer-form-icon">lock</i>
       {{'credentials' | uppercase}}
     </p>
-    <!-- <div fxLayout="row" fxLayoutAlign="start center">
-      <i class="material-icons drawer-form-icon" fxLayout="row" fxLayoutAlign="center center">lock</i>
-      <p class="drawer-form-label" fxLayout="row" fxLayoutAlign="center center">{{'Credentials' | uppercase}}</p>
-    </div > -->
+
     <br>
     <p *ngIf="!isEditMode">*A username will be automatically generated</p>
-    <!-- <p *ngIf="isEditMode">Username: {{ studentToEdit.username }}</p> -->
 
     <mat-form-field  *ngIf="isEditMode" fxFill>
         <input type="text" matInput placeholder="Username (Cannot be changed)" class="drawer-form-input-disabled" value="{{ studentToEdit.username }}" disabled>
@@ -153,17 +149,9 @@ iconRight="done"
       <input type="text" matInput formControlName="email" placeholder="Email (optional)" class="drawer-form-input">
     </mat-form-field> -->
 
+    <div *ngIf="isEditMode" fxLayout="row" fxLayoutAlign="right" class="drawer-form-input">
+      <mat-slide-toggle matInput formControlName="active" class="app-font"><span style="vertical-align: middle;">Active student</span></mat-slide-toggle>
+    </div>
+
   </form>
 </div>
-
-
-
-
- <!-- <mat-autocomplete #auto="matAutocomplete">
-          <mat-option (click)="selectedConnection = connection" *ngFor="let connection of filteredOptions | async" [value]="connection.name" class="background-eee">
-            <div fxLayout="row" fxLayoutAlign="start center">
-              <div class="profile-image-container-mini" [ngStyle]="{'background-image': 'url(' + connection.photoUrl + ')'}" style="margin-right: 15px"></div>
-              <span class="autocomp-text">{{ connection.name }}</span>
-            </div>
-          </mat-option>
-        </mat-autocomplete> -->

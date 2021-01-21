@@ -1,0 +1,13 @@
+<mughub-headnav title="resources" iconLeft="menu" (leftIconToggled)="sidenavService.onToggle.next();"></mughub-headnav>
+
+<div class="gutter">
+
+  <mat-expansion-panel *ngFor="let group of resourceGroups">
+    <mat-expansion-panel-header>
+      <mat-panel-title>{{ group.title }}</mat-panel-title>
+      <mat-panel-description>{{ group.description }}</mat-panel-description>
+    </mat-expansion-panel-header>
+    <button (click)="openAddDialog(group.title)" mat-button color="primary" fxLayout="row" fxLayoutAlign="center center"><i class="material-icons content-icon">add</i>Add Resource</button>
+  </mat-expansion-panel>
+
+</div>
