@@ -1,0 +1,13 @@
+mat-expansion-panel {
+  background-color: #eee;
+  margin-bottom: 20px;
+}
+
+mat-panel-title {
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 500;
+}
+
+button {
+  font-family: 'Montserrat', sans-serif !important;
+}
