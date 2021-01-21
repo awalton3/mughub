@@ -121,5 +121,8 @@
       }
     }
   },
-  "defaultProject": "mughub"
+  "defaultProject": "mughub",
+  "cli": {
+    "analytics": "8d91494d-2067-43d5-92ca-22579f3070fb"
+  }
 }

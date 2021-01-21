@@ -12,12 +12,13 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
 import { RosterAddComponent } from './roster-add/roster-add.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
 import { RosterTableComponent } from './roster-table/roster-table.component';
-
 
 @NgModule({
   declarations: [RosterComponent, RosterAddComponent, RosterTableComponent],
   imports: [
+    MatSelectModule,
     CommonModule,
     RosterRoutingModule,
     HeadnavModule,
