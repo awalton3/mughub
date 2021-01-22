@@ -1,0 +1,134 @@
+<mughub-headnav title="Learning Session" iconLeft="menu" (leftIconToggled)="sidenavService.onToggle.next()"></mughub-headnav>
+
+<div class="gutter">
+  <form [formGroup]="sessionForm">
+
+    <mat-accordion class="example-headers-align">
+
+      <!-- General Info -->
+      <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <fa-icon [icon]="['fas', 'info-circle']" class="icon-sm content-icon"></fa-icon>
+            General Info
+          </mat-panel-title>
+          <mat-panel-description>
+            Student name, session date and time
+            <!-- <fa-icon [icon]="['fas', 'info-circle']" class="icon-sm"></fa-icon> -->
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-form-field>
+          <mat-label>Student Name</mat-label>
+          <input formControlName="studentName" matInput>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Subject</mat-label>
+          <input formControlName="subject" matInput class="drawer-form-input">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Session Date</mat-label>
+          <input formControlName="date" matInput [matDatepicker]="sessionDatepicker" class="drawer-form-input">
+          <mat-datepicker-toggle matSuffix [for]="sessionDatepicker" color="accent"></mat-datepicker-toggle>
+          <mat-datepicker #sessionDatepicker color="accent"></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Time</mat-label>
+          <input type="time" formControlName="time" matInput class="drawer-form-input">
+        </mat-form-field>
+        <mat-action-row>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+
+      <!-- Learning Goals -->
+      <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <fa-icon [icon]="['fas', 'clipboard-list']" class="icon-sm content-icon"></fa-icon>
+            Learning Goals
+          </mat-panel-title>
+          <mat-panel-description>
+            Session objectives
+            <!-- <fa-icon [icon]="['fas', 'clipboard-list']" class="icon-sm"></fa-icon> -->
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-form-field fxFill>
+          <mat-label>Learning Session Objectives</mat-label>
+          <textarea matInput formControlName="learningGoals" cols="20" rows="10"
+          placeholder="
+        Ex: Review prepositions of place
+              Review items in the classroom
+              Review question words
+              Review -ar present tense endings"
+          class="drawer-form-input"></textarea>
+        </mat-form-field>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+
+      <!-- Reflection -->
+      <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <fa-icon [icon]="['fas', 'lightbulb']" class="icon-sm content-icon"></fa-icon>
+            Reflection
+          </mat-panel-title>
+          <mat-panel-description>
+            Observations and Recommendations
+            <!-- <fa-icon [icon]="['fas', 'lightbulb']" class="icon-sm"></fa-icon> -->
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <!-- Tips -->
+        <p class="color-base">
+          <fa-icon [icon]="['fas', 'lightbulb']" class="icon-xs content-icon color-accent"></fa-icon>
+          <span class="weight500">Pro Tip:</span> Be specific, don't forget the positives, and give constructive criticism.
+        </p>
+
+        <mat-form-field fxFill>
+          <mat-label>Observations</mat-label>
+          <textarea matInput formControlName="observations" cols="50" rows="10"
+          placeholder="Ex: Bob did well with reading/ translating and writing sentences independently. For vocab review he could recall 11/13 classroom items, 4/7 question words, and 8/10 prepositions of place. He still needs work on conjugating the verb endings according to who is doing the action (I, you, he, she we etc)."
+          class="drawer-form-input"></textarea>
+        </mat-form-field>
+        <mat-form-field fxFill>
+          <mat-label>Recommendations</mat-label>
+          <textarea matInput formControlName="recommendations" cols="30" rows="10"
+          placeholder="Ex: Bob should remember to look for the person/ people who are doing the actions in each sentence to determine what present tense endings to use."
+          class="drawer-form-input"></textarea>
+        </mat-form-field>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+
+      <!-- Homework -->
+      <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <fa-icon [icon]="['fas', 'book']" class="icon-sm content-icon"></fa-icon>
+            Homework
+          </mat-panel-title>
+          <mat-panel-description>
+            Post-session Assignment
+            <!-- <fa-icon [icon]="['fas', 'book']" class="icon-sm"></fa-icon> -->
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-form-field>
+          <mat-label>Homework</mat-label>
+          <input matInput type="text" min="1">
+        </mat-form-field>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Submit</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+
+    </mat-accordion>
+
+
+  </form>
+</div>
