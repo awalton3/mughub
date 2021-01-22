@@ -18,7 +18,7 @@ import { FormsMaterialComponentsModule } from '../shared/angular-material/forms-
 @NgModule({
   declarations: [AdminAppComponent, ResourcesComponent, ResourceAddComponent],
   imports: [
-    CommonModule,
+  CommonModule,
     MaterialComponentsModule,
     FormsMaterialComponentsModule,
     MatSidenavModule,
@@ -26,7 +26,7 @@ import { FormsMaterialComponentsModule } from '../shared/angular-material/forms-
     AdminAppRoutingModule,
     HeadnavModule,
     MatExpansionModule,
-    MatDialogModule
+    MatDialogModule,
   ]
 })
 export class AdminAppModule { }

@@ -1,9 +1,9 @@
 <mat-drawer-container class="heightFull">
   <mat-drawer #navDrawer class="sidenav">
-    <mughub-sidenav (closeNav)="navDrawer.close()" navUserIcon="user-graduate"></mughub-sidenav>
+    <mughub-sidenav (closeNav)="navDrawer.close()" [navLinks]="views"></mughub-sidenav>
   </mat-drawer>
   <mat-drawer-content *ngIf="!loading" class="background-eee paddingNone">
-    yooo
+    <router-outlet></router-outlet>
   </mat-drawer-content>
 </mat-drawer-container>
 <div *ngIf="loading" class=loader>loading...</div>

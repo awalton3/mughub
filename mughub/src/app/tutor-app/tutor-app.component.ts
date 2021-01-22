@@ -4,11 +4,11 @@ import { Router, NavigationStart, NavigationEnd, NavigationError, NavigationCanc
 import { SidenavService } from '../shared/sidenav/sidenav.service';
 
 @Component({
-  selector: 'app-admin-app',
-  templateUrl: './admin-app.component.html',
-  styleUrls: ['./admin-app.component.css']
+  selector: 'app-tutor-app',
+  templateUrl: './tutor-app.component.html',
+  styleUrls: ['./tutor-app.component.css']
 })
-export class AdminAppComponent implements OnInit {
+export class TutorAppComponent implements OnInit {
 
   private subs = new Subscription();
 
@@ -20,7 +20,10 @@ export class AdminAppComponent implements OnInit {
   }
 
   loading: boolean = true;
-  views = [ { name: 'Rosters', faIcon: 'users' }, { name: 'Resources', faIcon: 'chalkboard-teacher' } ]
+  views =  [
+    { name: 'Students', faIcon: 'users' },
+    { name: 'Record Session', faIcon: 'clipboard-list' },
+  ]
 
   constructor(private sidenavService: SidenavService, private router: Router) {
     router.events.subscribe(event => {
