@@ -1,0 +1,57 @@
+<mughub-headnav
+title="{{ isEditMode ? 'Edit tutor' : 'Add tutor' }}"
+iconLeft="close" (leftIconToggled)="closeDrawer()"
+iconRight="done" (rightIconToggled)="updateRoster()"
+[enableIconRight]="tutorForm.valid"></mughub-headnav>
+
+<div class="gutter-sm">
+  <form *ngIf="tutorForm" [formGroup]="tutorForm">
+
+    <!-- Profile Info -->
+    <p class="drawer-form-label" style="vertical-align: middle;">
+      <i class="material-icons drawer-form-icon">person</i>
+      {{'Profile' | uppercase }}
+    </p>
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <mat-form-field class="widthHalfPer">
+        <input type="text" matInput formControlName="firstName" placeholder="First name" class="drawer-form-input">
+      </mat-form-field>
+      <mat-form-field class="widthHalfPer">
+        <input type="text" matInput formControlName="lastName" placeholder="Last name" class="drawer-form-input">
+      </mat-form-field>
+    </div>
+
+    <br>
+
+    <!-- Login Credentials  -->
+    <p class="drawer-form-label">
+      <i class="material-icons drawer-form-icon">lock</i>
+      {{'credentials' | uppercase}}
+    </p>
+
+    <br>
+    <p *ngIf="!isEditMode">*A username will be automatically generated</p>
+
+    <mat-form-field *ngIf="isEditMode" fxFill>
+      <input type="text" matInput placeholder="Username (Cannot be changed)" class="drawer-form-input-disabled"
+        value="{{ tutorToEdit.username }}" disabled>
+    </mat-form-field>
+
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <mat-form-field class="widthHalfPer">
+        <input type="text" matInput formControlName="email" placeholder="Email (optional)" class="drawer-form-input">
+      </mat-form-field>
+      <mat-form-field class="widthHalfPer">
+        <input type="text" matInput formControlName="password" placeholder="Password" class="drawer-form-input">
+      </mat-form-field>
+    </div>
+
+    <br>
+
+    <div *ngIf="isEditMode" fxLayout="row" fxLayoutAlign="right" class="drawer-form-input">
+      <mat-slide-toggle matInput formControlName="active" class="app-font"><span style="vertical-align: middle;">Active
+          tutor</span></mat-slide-toggle>
+    </div>
+
+  </form>
+</div>

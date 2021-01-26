@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, ElementRef, Input } from '@angular/core';
 import { Subject } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -12,6 +12,7 @@ import { RosterService, Student } from '../roster.service';
 export class RosterAddComponent implements OnInit {
 
   @Output() onDrawerClose = new Subject();
+  @Input() userType: string;
 
   studentForm: FormGroup;
   // subjectForm: FormGroup;
@@ -42,6 +43,7 @@ export class RosterAddComponent implements OnInit {
     //   'subject': new FormGroup(null, Validators.required),
     //   'tutor': new FormGroup(null, Validators.required)
     // })
+
   }
 
   ngOnInit(): void {
@@ -71,7 +73,7 @@ export class RosterAddComponent implements OnInit {
     this.authService.getUserByUsername(this.studentToEdit.username)
       .then(userObj => {
         let subjects = { subjects: this.subjects }
-        this.authService.editUserInFirestore(userObj.docs[0].id, {...this.studentForm.value, ...subjects})
+        this.authService.editUserInFirestore(userObj.docs[0].id, { ...this.studentForm.value, ...subjects })
         this.authService.onSuccess("Student successfully updated")
         this.closeDrawer()
       })

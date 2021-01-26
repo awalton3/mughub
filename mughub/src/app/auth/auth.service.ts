@@ -4,7 +4,7 @@ import 'firebase/firestore';
 import 'firebase/auth';
 import { SnackBarService } from '../shared/snack-bar/snack-bar.service';
 import { Router } from '@angular/router';
-import { Student } from '../admin-app/roster/roster.service';
+import { Student, Tutor } from '../admin-app/roster/roster.service';
 
 @Injectable({
   providedIn: 'root'
@@ -156,6 +156,21 @@ export class AuthService {
         this.registerInAuth(username, student.password).then(userObj => {
           let other = { type: 'student', username: username, active: true }
           this.createUserInFirestore(userObj.user.uid, { ...student, ...other })
+            .then(() => Promise.resolve())
+            .catch(error => Promise.reject(error))
+        }).catch(error => Promise.reject(error))
+      }).catch(error => Promise.reject(error))
+  }
+
+  registerTutor(tutor: Tutor) {
+    console.log(tutor);
+    let base = (tutor.firstName + tutor.lastName).toLowerCase()
+    return this.generateUsername(base)
+      .then(username => {
+        console.log(username)
+        this.registerInAuth(username, tutor.password).then(userObj => {
+          let other = { type: 'tutor', username: username, active: true }
+          this.createUserInFirestore(userObj.user.uid, { ...tutor, ...other })
             .then(() => Promise.resolve())
             .catch(error => Promise.reject(error))
         }).catch(error => Promise.reject(error))

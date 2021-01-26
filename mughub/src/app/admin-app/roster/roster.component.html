@@ -1,43 +1,84 @@
 <mat-drawer-container [hasBackdrop]="false" class="heightFull">
 
   <mat-drawer #editor mode="over" position="end" opened="false" class="side-content-drawer">
-    <roster-add (onDrawerClose)="editor.close()"></roster-add>
+    <roster-add *ngIf="userType === 'student'" (onDrawerClose)="editor.close()"></roster-add>
+    <roster-add-tutor *ngIf="userType === 'tutor'" (onDrawerClose)="editor.close()"></roster-add-tutor>
   </mat-drawer>
 
   <mat-drawer-content class="background-white heightFull">
     <mughub-headnav title="roster" iconLeft="menu" (leftIconToggled)="closeSidenav()"></mughub-headnav>
 
 
-    <div fxLayout="column" fxLayoutAlign="center center" class="widthFullPer gutter">
+    <div fxLayout="column" fxLayoutAlign="left left" class="widthFullPer gutter">
 
-      <div fxLayout="row" fxLayoutAlign="space-between start" class="widthFullPer">
-        <p class="section-title" fxLayout="row" fxLayoutAlign="start center">
-          <i class="material-icons content-icon">school</i>Student Roster
-        </p>
-        <button (click)="editor.open()" mat-stroked-button class="action-button-stroked" color="accent" fxLayout="row" fxLayoutAlign="center center">
-          <i class="material-icons drawer-form-icon" style="color: #ea9103">add</i>
-          <span>ADD STUDENT</span>
-        </button>
-      </div>
+      <mat-tab-group animationDuration="0ms">
+        <mat-tab label="Student">
+          <br>
+          <div fxLayout="row" fxLayoutAlign="space-between start" class="widthFullPer">
+            <p class="section-title" fxLayout="row" fxLayoutAlign="start center">
+              <i class="material-icons content-icon">school</i>Student Roster
+            </p>
+            <button (click)="addStudent()" mat-stroked-button class="action-button-stroked" color="accent"
+              fxLayout="row" fxLayoutAlign="center center">
+              <i class="material-icons drawer-form-icon" style="color: #ea9103">add</i>
+              <span>ADD STUDENT</span>
+            </button>
+          </div>
+          <br>
+          <app-roster-table *ngIf="dataStudents" [data]="dataStudents" [displayedColumns]="displayedColumns"
+            (onRowClick)="editStudent($event)" class="widthFullPer"></app-roster-table>
+
+          <!-- Empty State - No data to display -->
+          <div *ngIf="!dataStudents" class=loader>loading...</div>
+          <div *ngIf="dataStudents && !dataStudents.data.length" fxLayout="column" fxLayoutAlign="center center"
+            style="height: 35vw; width: 50%; text-align: center">
+            <h2>No students yet.</h2>
+            <p>Add students to the MUG roster here. This will give them access to assignments and educational resources.
+            </p>
+            <br>
+            <button (click)="editor.open()" mat-stroked-button class="action-button-stroked" color="accent"
+              fxLayout="row" fxLayoutAlign="center center">
+              <i class="material-icons drawer-form-icon" style="color: #ea9103">add</i>
+              <span>ADD STUDENT</span>
+            </button>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Tutor">
+          <br>
+          <div fxLayout="row" fxLayoutAlign="space-between start" class="widthFullPer">
+            <p class="section-title" fxLayout="row" fxLayoutAlign="start center">
+              <i class="material-icons content-icon">school</i>Tutor Roster
+            </p>
+            <button (click)="addTutor()" mat-stroked-button class="action-button-stroked" color="accent"
+              fxLayout="row" fxLayoutAlign="center center">
+              <i class="material-icons drawer-form-icon" style="color: #ea9103">add</i>
+              <span>ADD TUTOR</span>
+            </button>
+          </div>
+          <br>
+          <app-roster-table *ngIf="dataTutors" [data]="dataTutors" [displayedColumns]="displayedColumns"
+            (onRowClick)="editTutor($event)" class="widthFullPer"></app-roster-table>
+
+          <!-- Empty State - No data to display -->
+          <div *ngIf="!dataTutors" class=loader>loading...</div>
+          <div *ngIf="dataTutors && !dataTutors.data.length" fxLayout="column" fxLayoutAlign="center center"
+            style="height: 35vw; width: 50%; text-align: center">
+            <h2>No tutors yet.</h2>
+            <p>Add tutors to the MUG roster here. This will give them access to assignments and educational resources.
+            </p>
+            <br>
+            <button (click)="editor.open()" mat-stroked-button class="action-button-stroked" color="accent"
+              fxLayout="row" fxLayoutAlign="center center">
+              <i class="material-icons drawer-form-icon" style="color: #ea9103">add</i>
+              <span>ADD TUTOR</span>
+            </button>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
       <mat-divider class="widthFullPer"></mat-divider>
 
       <br>
-
-      <!-- Empty State - No data to display -->
-
-      <div *ngIf="!dataSource" class=loader>loading...</div>
-
-      <div *ngIf="dataSource && !dataSource.data.length" fxLayout="column" fxLayoutAlign="center center" style="height: 35vw; width: 50%; text-align: center">
-        <h2>No students yet.</h2>
-        <p>Add students to the MUG roster here. This will give them access to assignments and educational resources.</p>
-        <br>
-        <button (click)="editor.open()" mat-stroked-button class="action-button-stroked" color="accent" fxLayout="row" fxLayoutAlign="center center">
-          <i class="material-icons drawer-form-icon" style="color: #ea9103">add</i>
-          <span>ADD STUDENT</span>
-        </button>
-      </div>
-
-      <app-roster-table *ngIf="dataSource" [data]="dataSource" [displayedColumns]="displayedColumns" (onRowClick)="editStudent($event)" class="widthFullPer"></app-roster-table>
 
       <!-- <table *ngIf="dataSource && dataSource.data.length" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 widthFullPer">
 
