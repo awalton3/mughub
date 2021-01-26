@@ -22,7 +22,7 @@ export class TutorAppComponent implements OnInit {
   loading: boolean = true;
   views =  [
     { name: 'Students', faIcon: 'users' },
-    { name: 'Record Session', faIcon: 'clipboard-list' },
+    { name: 'Sessions', faIcon: 'clipboard-list', link: 'sessions' },
   ]
 
   constructor(private sidenavService: SidenavService, private router: Router) {

@@ -13,7 +13,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   private subs = new Subscription();
   /* icon attribute represents name of icon in font-awesome library;
       You must also ADD ICON TO LIBRARY in sidenav module to use */
-  @Input() navLinks: Array<{ name: String, faIcon: String}>;
+  @Input() navLinks: Array<{ name: String, faIcon: String, link: String}>;
   @Input() navUserIcon?: string;
   @Output() closeNav = new Subject();
 
@@ -28,9 +28,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
   constructor(/*private userService: UserService,*/ private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    console.log(this.navUserIcon)
-    console.log(this.navLinks)
-    //console.log(this.navLinks)
     this.user = JSON.parse(sessionStorage.getItem('user'));
     // this.getDefaultNavLinks();
     //this.defaultNavLinksArr = Object.keys(this.defaultNavLinks);
@@ -77,7 +74,11 @@ export class SidenavComponent implements OnInit, OnDestroy {
   //   }
   // }
 
-  navigate(link: string) {
+  navigate(endpoint) {
+    let link = endpoint.link
+    if (!endpoint.link) {
+      link = endpoint.name
+    }
     this.router.navigate([link.toLowerCase()], {relativeTo: this.route})
     // if (link === 'mail') {
     //   // this.router.navigate(['mailhub/inbox'], { relativeTo: this.route });

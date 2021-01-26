@@ -1,0 +1,39 @@
+mat-card {
+  max-width: 400px;
+  width: 400px;
+  max-height: 500px;
+  padding: 0;
+  background: #eee;
+}
+
+.card-header {
+  padding: 15px;
+  font-family: 'Montserrat', sans-serif !important
+}
+
+.card-section {
+  padding: 5px;
+}
+
+.card-section-title {
+  font-size: 19px;
+  margin-bottom: 10px;
+}
+
+.chalkboard {
+  background: url('../../../assets/images/chalkboard-blue.jpg');
+  background-position: cover;
+  color: white;
+  padding: 15px;
+}
+
+ul li {
+  display: list-item;
+  font-size: 17px;
+  width: 330px;
+}
+
+/* mat-card-content p, mat-card-content fa-icon {
+  color: #30546c;
+  font-weight: 500
+} */

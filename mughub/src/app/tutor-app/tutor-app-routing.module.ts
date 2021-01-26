@@ -3,13 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { TutorAppComponent } from './tutor-app.component';
 import { StudentsComponent } from './students/students.component';
-import { LogSessionComponent } from './log-session/log-session.component';
+import { SessionsComponent } from './sessions/sessions.component';
 
 const routes: Routes = [
   { path: '', component: TutorAppComponent, children: [
-    { path: '', redirectTo: 'students', pathMatch: 'full'},
+    { path: '', redirectTo: 'sessions', pathMatch: 'full'},
     { path: 'students', component: StudentsComponent },
-    { path: 'log', component: LogSessionComponent },
+    { path: 'sessions', component: SessionsComponent },
   ]},
 ];
 

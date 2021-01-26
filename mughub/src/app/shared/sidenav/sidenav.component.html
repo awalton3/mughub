@@ -13,7 +13,7 @@
   </div>
 
   <div class="widthFullPer" fxLayout="column" fxLayoutAlign="start start">
-    <div *ngFor="let link of navLinks" class="widthFullPer" (click)="navigate(link.name)" >
+    <div *ngFor="let link of navLinks" class="widthFullPer" (click)="navigate(link)" >
       <div fxLayout="row" fxLayoutAlign="start center" class="sideDrawer-links" matRipple>
         <fa-icon fxLayout="row" fxLayoutAlign="center center"  [icon]="['fas', link.faIcon]" style="width: 50px; font-size: 20px"></fa-icon>
         <div fxLayout="row" fxLayoutAlign="center center">{{ link.name }}</div>

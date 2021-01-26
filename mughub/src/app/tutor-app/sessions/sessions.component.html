@@ -1,0 +1,28 @@
+<mat-drawer-container [hasBackdrop]="false" class="heightFull">
+
+  <mat-drawer #editor mode="over" position="end" opened="false" class="side-content-drawer-half">
+    <app-log-session (onDrawerClose)="editor.close()"></app-log-session>
+  </mat-drawer>
+
+  <mat-drawer-content class="background-white heightFull">
+    <mughub-headnav title="Learning Sessions" iconLeft="menu" (leftIconToggled)="sidenavService.onToggle.next()">
+    </mughub-headnav>
+    <br>
+
+    <div *ngIf="loading" class=loader>loading...</div>
+
+    <div *ngIf="!loading && !sessions.length">No sessions</div>
+
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <app-session-card class="cursor-pointer" (click)="editSession(session); editor.open()" *ngFor="let session of sessions" [session]="session"></app-session-card>
+    </div>
+
+    <div class="bottom-right-fab">
+      <button (click)="editor.open()" mat-fab color="accent">
+        <i class="material-icons" fxLayoutAlign="center center" style="color: white">add</i>
+      </button>
+    </div>
+
+  </mat-drawer-content>
+
+</mat-drawer-container>

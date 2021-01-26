@@ -7,8 +7,8 @@ import { ResourcesComponent } from './resources/resources.component';
 
 const routes: Routes = [
   { path: '', component: AdminAppComponent, children: [
-    { path: '', redirectTo: 'roster', pathMatch: 'full'},
-    { path: 'roster', loadChildren: () => import('./roster/roster.module').then(m => m.RosterModule) },
+    { path: '', redirectTo: 'rosters', pathMatch: 'full'},
+    { path: 'rosters', loadChildren: () => import('./roster/roster.module').then(m => m.RosterModule) },
     { path: 'resources', component: ResourcesComponent }
   ]},
 ];
