@@ -14,9 +14,10 @@ import { RosterAddComponent } from './roster-add/roster-add.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { RosterTableComponent } from './roster-table/roster-table.component';
+import { RosterAddTutorComponent } from './roster-add-tutor/roster-add-tutor.component';
 
 @NgModule({
-  declarations: [RosterComponent, RosterAddComponent, RosterTableComponent],
+  declarations: [RosterComponent, RosterAddComponent, RosterTableComponent, RosterAddTutorComponent],
   imports: [
     MatSelectModule,
     CommonModule,

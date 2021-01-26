@@ -14,7 +14,8 @@ export interface Student {
   username: string,
   password: string,
   subjects: Array<{ subject: string, tutor: string }>,
-  email: string
+  email: string,
+  active: boolean
 }
 
 export interface Tutor {
@@ -22,8 +23,8 @@ export interface Tutor {
   lastName: string,
   username: string,
   password: string,
-  subjects: Array<{ subject: string, tutor: string }>,
-  email: string
+  email: string,
+  active: boolean
 }
 
 @Injectable({
@@ -35,6 +36,7 @@ export class RosterService {
   constructor() {}
 
   onEditStudent = new Subject<Student>();
+  onEditTutor = new Subject<Tutor>();
 
   getStudents() {
     return new Observable(observer => {
@@ -50,9 +52,9 @@ export class RosterService {
   getTutors() {
     return new Observable(observer => {
       const unsubscribe = usersRef.where("type", "==", "tutor").onSnapshot(querySnapshot => {
-        let students = []
-        querySnapshot.forEach(doc => students.push(doc.data()))
-        observer.next(students)
+        let tutors = []
+        querySnapshot.forEach(doc => tutors.push(doc.data()))
+        observer.next(tutors)
       })
       return () => { unsubscribe(); }
     })

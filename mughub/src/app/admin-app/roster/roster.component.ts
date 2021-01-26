@@ -16,7 +16,7 @@ export class RosterComponent implements OnInit, OnDestroy {
   constructor(
     private sidenavService: SidenavService,
     private rosterService: RosterService
-    ) { }
+  ) { }
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('editor', { static: false }) editor: any;
@@ -25,28 +25,20 @@ export class RosterComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['firstName', 'lastName', 'username', 'password'];
   dataStudents: any;
   dataTutors: any;
-  //testData = [];
   editorData: any;
-  userType = 'student';
+  userType: any;
 
   ngOnInit(): void {
-    //this.testData = ['apple', 'orange', 'potato']
     this.subs.add(this.rosterService.getStudents()
       .subscribe((students: Array<Student>) => {
         this.dataStudents = new MatTableDataSource(students)
-        this.dataStudents.sort = this.sort;
       }))
 
     this.subs.add(this.rosterService.getTutors()
       .subscribe((tutors: Array<Tutor>) => {
         this.dataTutors = new MatTableDataSource(tutors)
-        this.dataTutors.sort = this.sort;
       }))
   }
-
-  // ngAfterViewInit() {
-  //   this.dataSource.sort = this.sort;
-  // }
 
   testing(event) {
     console.log(event);
@@ -57,7 +49,7 @@ export class RosterComponent implements OnInit, OnDestroy {
     this.editor.open()
   }
 
-  addTutor(){
+  addTutor() {
     this.userType = 'tutor';
     this.editor.open()
   }
@@ -71,7 +63,7 @@ export class RosterComponent implements OnInit, OnDestroy {
 
   editTutor(tutor: Tutor) {
     //send drawer component the data to edit
-    this.rosterService.onEditStudent.next(tutor)
+    this.rosterService.onEditTutor.next(tutor)
     this.userType = 'tutor';
     this.editor.open()
   }
