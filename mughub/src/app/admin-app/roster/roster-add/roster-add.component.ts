@@ -1,8 +1,9 @@
-import { Component, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, ElementRef, Input } from '@angular/core';
 import { Subject } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
-import { RosterService, Student } from '../roster.service';
+import { RosterService, Student, Tutor } from '../roster.service';
+import { RosterComponent } from '../roster.component';
 
 @Component({
   selector: 'roster-add',
@@ -12,11 +13,14 @@ import { RosterService, Student } from '../roster.service';
 export class RosterAddComponent implements OnInit {
 
   @Output() onDrawerClose = new Subject();
+  @Input() userType: string;
 
   studentForm: FormGroup;
+  tutorForm: FormGroup;
   // subjectForm: FormGroup;
   isEditMode = false;
   studentToEdit: Student;
+  tutorToEdit: Tutor;
   subjects: Array<{ subject: string, tutor: string }> = [];
   @ViewChild('subjectName') subjectNameInput: ElementRef;
   @ViewChild('subjectTutor') subjectTutorInput: ElementRef;
@@ -35,13 +39,24 @@ export class RosterAddComponent implements OnInit {
       'parentLastName': new FormControl(null, Validators.required),
       'parentEmail': new FormControl(null, Validators.email),
       'gradeLevel': new FormControl(null),
-      'active': new FormControl(null)
+      'active': new FormControl(null),
+      'type': new FormControl(null)
       // 'phone': new FormControl(null, [Validators.required, Validators.pattern("[0-9]{10}")])
     })
     // this.subjectForm = new FormGroup({
     //   'subject': new FormGroup(null, Validators.required),
     //   'tutor': new FormGroup(null, Validators.required)
     // })
+    this.tutorForm = new FormGroup({
+      'firstName': new FormControl(null, Validators.required),
+      'lastName': new FormControl(null, Validators.required),
+      'email': new FormControl(null, Validators.email),
+      // 'subjects': new FormControl(null, Validators.required),
+      'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
+      'active': new FormControl(null),
+      'type': new FormControl(null)
+      // 'phone': new FormControl(null, [Validators.required, Validators.pattern("[0-9]{10}")])
+    })
   }
 
   ngOnInit(): void {
@@ -58,24 +73,45 @@ export class RosterAddComponent implements OnInit {
   }
 
   addStudent() {
-    let subjects = { subjects: this.subjects }
-    this.authService.registerStudent({ ...this.studentForm.value, ...subjects })
+    if (this.userType == 'student') {
+      let subjects = { subjects: this.subjects }
+      this.authService.registerStudent({ ...this.studentForm.value, ...subjects })
+        .then(onSuccess => {
+          this.authService.onSuccess("Student added to roster")
+          this.closeDrawer()
+        })
+        .catch(error => console.log(error)) //need more action here
+    }
+    else if (this.userType == 'tutor'){
+      this.authService.registerTutor({ ...this.tutorForm.value })
       .then(onSuccess => {
-        this.authService.onSuccess("Student added to roster")
+        this.authService.onSuccess("Tutor added to roster")
         this.closeDrawer()
       })
       .catch(error => console.log(error)) //need more action here
+    }
   }
 
   editStudent() {
-    this.authService.getUserByUsername(this.studentToEdit.username)
+    if (this.userType == 'student'){
+      this.authService.getUserByUsername(this.studentToEdit.username)
+        .then(userObj => {
+          let subjects = { subjects: this.subjects }
+          this.authService.editUserInFirestore(userObj.docs[0].id, {...this.studentForm.value, ...subjects})
+          this.authService.onSuccess("Student successfully updated")
+          this.closeDrawer()
+        })
+        .catch(error => console.log(error)) //need more action here
+    }
+    else if (this.userType == 'tutor'){
+      this.authService.getUserByUsername(this.tutorToEdit.username)
       .then(userObj => {
-        let subjects = { subjects: this.subjects }
-        this.authService.editUserInFirestore(userObj.docs[0].id, {...this.studentForm.value, ...subjects})
-        this.authService.onSuccess("Student successfully updated")
+        this.authService.editUserInFirestore(userObj.docs[0].id, {...this.tutorForm.value})
+        this.authService.onSuccess("Tutor successfully updated")
         this.closeDrawer()
       })
       .catch(error => console.log(error)) //need more action here
+    }
   }
 
   addSubject() {

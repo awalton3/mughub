@@ -17,6 +17,15 @@ export interface Student {
   email: string
 }
 
+export interface Tutor {
+  firstName: string,
+  lastName: string,
+  username: string,
+  password: string,
+  subjects: Array<{ subject: string, tutor: string }>,
+  email: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -30,6 +39,17 @@ export class RosterService {
   getStudents() {
     return new Observable(observer => {
       const unsubscribe = usersRef.where("type", "==", "student").onSnapshot(querySnapshot => {
+        let students = []
+        querySnapshot.forEach(doc => students.push(doc.data()))
+        observer.next(students)
+      })
+      return () => { unsubscribe(); }
+    })
+  }
+
+  getTutors() {
+    return new Observable(observer => {
+      const unsubscribe = usersRef.where("type", "==", "tutor").onSnapshot(querySnapshot => {
         let students = []
         querySnapshot.forEach(doc => students.push(doc.data()))
         observer.next(students)

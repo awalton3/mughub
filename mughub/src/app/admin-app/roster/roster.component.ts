@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular
 import { SidenavService } from '../../shared/sidenav/sidenav.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { RosterService, Student } from './roster.service';
+import { RosterService, Student, Tutor } from './roster.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -23,16 +23,24 @@ export class RosterComponent implements OnInit, OnDestroy {
 
   private subs = new Subscription();
   displayedColumns: string[] = ['firstName', 'lastName', 'username', 'password'];
-  dataSource: any;
+  dataStudents: any;
+  dataTutors: any;
   //testData = [];
   editorData: any;
+  userType = 'student';
 
   ngOnInit(): void {
     //this.testData = ['apple', 'orange', 'potato']
     this.subs.add(this.rosterService.getStudents()
       .subscribe((students: Array<Student>) => {
-        this.dataSource = new MatTableDataSource(students)
-        this.dataSource.sort = this.sort;
+        this.dataStudents = new MatTableDataSource(students)
+        this.dataStudents.sort = this.sort;
+      }))
+
+    this.subs.add(this.rosterService.getTutors()
+      .subscribe((tutors: Array<Tutor>) => {
+        this.dataTutors = new MatTableDataSource(tutors)
+        this.dataTutors.sort = this.sort;
       }))
   }
 
@@ -44,9 +52,27 @@ export class RosterComponent implements OnInit, OnDestroy {
     console.log(event);
   }
 
+  addStudent() {
+    this.userType = 'student';
+    this.editor.open()
+  }
+
+  addTutor(){
+    this.userType = 'tutor';
+    this.editor.open()
+  }
+
   editStudent(student: Student) {
     //send drawer component the data to edit
+    this.userType = 'student';
     this.rosterService.onEditStudent.next(student)
+    this.editor.open()
+  }
+
+  editTutor(tutor: Tutor) {
+    //send drawer component the data to edit
+    this.rosterService.onEditStudent.next(tutor)
+    this.userType = 'tutor';
     this.editor.open()
   }
 
