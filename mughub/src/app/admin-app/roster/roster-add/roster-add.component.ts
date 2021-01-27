@@ -46,7 +46,6 @@ export class RosterAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.listenForEditRequests();
-    this.dummyFunction();
   }
 
   listenForEditRequests() {
@@ -62,19 +61,13 @@ export class RosterAddComponent implements OnInit {
     let subjects = { subjects: this.subjects }
     this.authService.registerStudent({ ...this.studentForm.value, ...subjects })
       .then(onSuccess => {
-        this.authService.onSuccess("Student added to roster")
-        console.log("added new student")
-        this.closeDrawer()
+        this.authService.addStudentToGoogleSheets(this.studentForm.value)
+          .then(onSuccess => {
+            this.authService.onSuccess("Student added to roster")
+            this.closeDrawer()
+          }).catch(error => console.log(error))
       })
       .catch(error => console.log(error)) //need more action here
-  }
-
-  dummyFunction() {
-    this.authService.addStudentToGoogleSheets({
-      'col1': 'some data',
-      'col2': 'some data',
-      'col3': 'some data'
-    })
   }
 
   editStudent() {

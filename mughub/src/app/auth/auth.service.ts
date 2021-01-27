@@ -9,10 +9,7 @@ import { Student } from '../admin-app/roster/roster.service';
 //const GoogleSpreadsheet = require('google-spreadsheet');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const studentRosterSheet = new GoogleSpreadsheet('1tvlO0a618AMi2DRs64_Z3V-GYd5YyPs5TSkPpPR5Fdk');
-
-const creds = require('../../assets/sheets/credentials.json');
-
-console.log(studentRosterSheet)
+const googleSheetCreds = require('../../assets/sheets/credentials.json');
 
 @Injectable({
   providedIn: 'root'
@@ -160,7 +157,6 @@ export class AuthService {
     let base = (student.firstName + student.lastName).toLowerCase()
     return this.generateUsername(base)
       .then(username => {
-        console.log(username)
         this.registerInAuth(username, student.password).then(userObj => {
           let other = { type: 'student', username: username, active: true }
           this.createUserInFirestore(userObj.user.uid, { ...student, ...other })
@@ -171,35 +167,15 @@ export class AuthService {
   }
 
   addStudentToGoogleSheets(studentData) {
-    console.log("in add student to google sheets")
-    console.log(studentData);
-
-    studentRosterSheet.useServiceAccountAuth(creds)
-      .then(res => {
-        console.log("In useServiceAccountAUTH: ", res)
-      }).catch(error => console.log(error))
-
-    studentRosterSheet.loadInfo().then(res => {
-      console.log("In load info: ", res)
-    })
-
-    //await studentRosterSheet.loadInfo();
-
-    // (async () => {await studentRosterSheet.useServiceAccountAuth(creds);    
-    //   await studentRosterSheet.loadInfo();    
-    //   const sheet = studentRosterSheet.sheetsByIndex[1];    
-    //   const rows = await sheet.getRows();     
-    //   //rows = rows.map(a => a._rawData)    
-    //   console.log(rows);
-    // })()
-
-    // studentRosterSheet.useServiceAccountAuth(creds, function (err) {
-    //   console.log(creds)
-    //   studentRosterSheet.addRow(1, studentData, function (err) {
-    //     if (err) {
-    //       console.log(err);
-    //     }
-    //   });
-    // });
+    return studentRosterSheet.useServiceAccountAuth(googleSheetCreds)
+      .then(() => {
+        studentRosterSheet.loadInfo().then(() => {
+          let sheet = studentRosterSheet.sheetsByTitle['roster']
+          //if !sheet create the sheet here
+          sheet.addRow(studentData)
+            .then(() => Promise.resolve())
+            .catch(error => Promise.reject(error))
+        }).catch(error => Promise.reject(error))
+      }).catch(error => Promise.reject(error))
   }
 }
