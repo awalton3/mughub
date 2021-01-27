@@ -14,7 +14,15 @@
     <div *ngIf="!loading && !sessions.length">No sessions</div>
 
     <div fxLayout="column" fxLayoutAlign="center center">
-      <app-session-card class="cursor-pointer" (click)="editSession(session); editor.open()" *ngFor="let session of sessions" [session]="session"></app-session-card>
+      <div *ngFor="let date of sessionsByDate | objectKeys">
+        <div fxLayout="row" fxLayoutAlign="start center" class="date-header" style="padding-bottom: 7px">
+          <i class="material-icons icon-xs content-icon">calendar_today</i>
+          <p class="paddingNone marginNone">
+            {{ getDate(date).getMonth() | monthString | uppercase }} {{ getDate(date).getDate() }}</p>
+          </div>
+        <mat-divider></mat-divider>
+        <app-session-card class="cursor-pointer" (click)="editSession(session)" *ngFor="let session of sessionsByDate[date]" [session]="session"></app-session-card>
+      </div>
     </div>
 
     <div class="bottom-right-fab">

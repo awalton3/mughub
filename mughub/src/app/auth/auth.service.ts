@@ -148,15 +148,13 @@ export class AuthService {
   }
 
   registerStudent(student: Student) {
-    console.log(student);
     let base = (student.firstName + student.lastName).toLowerCase()
     return this.generateUsername(base)
       .then(username => {
-        console.log(username)
         this.registerInAuth(username, student.password).then(userObj => {
           let other = { type: 'student', username: username, active: true }
           this.createUserInFirestore(userObj.user.uid, { ...student, ...other })
-            .then(() => Promise.resolve())
+            .then(() => Promise.resolve() /* add student to tutor's profile */)
             .catch(error => Promise.reject(error))
         }).catch(error => Promise.reject(error))
       }).catch(error => Promise.reject(error))

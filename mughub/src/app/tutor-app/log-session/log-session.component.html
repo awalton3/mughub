@@ -24,7 +24,7 @@
         </mat-expansion-panel-header>
         <mat-form-field>
           <mat-label>Student Name</mat-label>
-          <input formControlName="studentName" matInput>
+          <input formControlName="studentName" matInput class="drawer-form-input">
         </mat-form-field>
         <mat-form-field>
           <mat-label>Subject</mat-label>
@@ -148,7 +148,7 @@
 
         <mat-action-row>
           <button mat-button color="primary" (click)="prevStep()">Previous</button>
-          <button (click)="submitSession()" mat-button color="accent" (click)="nextStep()" [disabled]="sessionForm.status === 'INVALID'">Submit</button>
+          <button (click)="submitSession()" mat-button color="accent" (click)="nextStep()" [disabled]="sessionForm.status === 'INVALID'">{{  isEditMode ? 'Save' : 'Submit'  }}</button>
         </mat-action-row>
       </mat-expansion-panel>
 

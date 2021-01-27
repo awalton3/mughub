@@ -27,15 +27,25 @@ export class TutorService {
       .catch(()=> this.snackbarService.onError('An Error Occurred'))
   }
 
+  updateSession(sessionData, sessionId) {
+    sessionsRef.doc(sessionId).update(sessionData)
+      .then(() => this.snackbarService.onSuccess('Tutoring session was successfully updated'))
+      .catch(()=> this.snackbarService.onError('An Error Occurred'))
+  }
+
   getSessions(tutorUsername) {
     return new Observable(observer => {
       sessionsRef
         .where("tutorUsername", "==", tutorUsername)
+        .orderBy("date", 'desc')
         .onSnapshot(querySnapshot => {
           let sessions = []
           querySnapshot.forEach(doc => {
-            let docId = {id: doc.id}
-            sessions.push({...doc.data(), ...docId})
+            //reformat date
+            let original = new Date( (doc.data().date.seconds) * 1000 )
+            let newDate = new Date( original.getFullYear(), original.getMonth(), original.getDate(), 0, 0, 0)
+            let other = {id: doc.id, generalDate: newDate }
+            sessions.push({...doc.data(), ...other})
           })
           observer.next(sessions)
         })

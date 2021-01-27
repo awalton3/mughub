@@ -1,9 +1,12 @@
 mat-card {
-  max-width: 400px;
-  width: 400px;
-  max-height: 500px;
+  min-width: 300px;
+  width: 500px;
+  height: 500px;
+  min-height: 500px;
   padding: 0;
   background: #eee;
+  margin: 30px 10px;
+  overflow-y: scroll;
 }
 
 .card-header {
@@ -25,12 +28,24 @@ mat-card {
   background-position: cover;
   color: white;
   padding: 15px;
+  height: 80%;
 }
 
 ul li {
   display: list-item;
   font-size: 17px;
   width: 330px;
+}
+
+.section-content {
+  font-size: 17px;
+}
+
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* mat-card-content p, mat-card-content fa-icon {

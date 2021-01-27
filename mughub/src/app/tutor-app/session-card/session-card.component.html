@@ -12,31 +12,35 @@
     </div>
   </div>
   <mat-card-content class="chalkboard">
-    <div class="card-section" fxLayout="row" fxLayoutAlign="start center">
-      <fa-icon [icon]="['fas', 'clipboard-list']" class="icon-sm content-icon"></fa-icon>
-      <p class="paddingNone marginNone card-section-title chalkTitleFont">Learning Goals</p>
-    </div>
-    <ul class="chalkBodyFont">
-      <li>Goal number one</li>
-      <li>Goal number two</li>
-      <li>Goal number three</li>
-      <li>Goal number two</li>
-      <li>Goal number three</li>
-    </ul>
-    <!-- <p class="keep-line-breaks indent chalkBodyFont">{{ session.learningGoals }}</p> -->
+      <div class="card-section" fxLayout="row" fxLayoutAlign="start center">
+        <fa-icon [icon]="['fas', 'clipboard-list']" class="icon-sm content-icon"></fa-icon>
+        <p class="paddingNone marginNone card-section-title chalkTitleFont">Learning Goals</p>
+      </div>
+      <ul class="chalkBodyFont">
+        <li>Goal number one</li>
+        <li>Goal number two</li>
+        <li>Goal number three</li>
+      </ul>
+      <div class="card-section" fxLayout="row" fxLayoutAlign="start center">
+        <fa-icon [icon]="['fas', 'lightbulb']" class="icon-sm content-icon"></fa-icon>
+        <p class="paddingNone marginNone card-section-title chalkTitleFont">Reflections</p>
+      </div>
+      <br>
+      <!-- <fa-icon [icon]="['fas', session.studentPrepared]" class="icon-sm content-icon"></fa-icon> -->
 
-    <div class="card-section" fxLayout="row" fxLayoutAlign="start center">
-      <fa-icon [icon]="['fas', 'book']" class="icon-sm content-icon"></fa-icon>
-      <p class="paddingNone marginNone card-section-title chalkTitleFont">Homework</p>
-    </div>
-    <ul class="chalkBodyFont">
-      <li *ngFor="let assignment of session.homework" class="truncate">{{ assignment.title }}: {{assignment.instructions}}</li>
-    </ul>
+      <p class="chalkBodyFont indent section-content line-clamp">
+        Observations: {{ session.observations }}
+      </p>
+      <p class="chalkBodyFont indent section-content line-clamp">
+        Recommendations: {{ session.recommendations }}
+      </p>
 
-
-
+      <div class="card-section" fxLayout="row" fxLayoutAlign="start center">
+        <fa-icon [icon]="['fas', 'book']" class="icon-sm content-icon"></fa-icon>
+        <p class="paddingNone marginNone card-section-title chalkTitleFont">Homework</p>
+      </div>
+      <ul class="chalkBodyFont">
+        <li *ngFor="let assignment of session.homework" class="truncate">{{ assignment.title }}: {{assignment.instructions}}</li>
+      </ul>
   </mat-card-content>
-  <!-- <mat-card-actions align="start">
-      <button mat-button>Record Session</button>
-  </mat-card-actions> -->
 </mat-card>

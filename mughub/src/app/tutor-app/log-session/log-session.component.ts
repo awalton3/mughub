@@ -102,13 +102,20 @@ export class LogSessionComponent implements OnInit {
     this.isEditMode = false
     this.onDrawerClose.next()
     this.sessionForm.reset()
+    this.sessionForm.patchValue({ date: new Date() }) //set to today's date
+    this.setStep(0) //default: first panel should be open ---- NOT WORKING
     this.assignments = []
   }
 
   submitSession() {
     let other = { homework: this.assignments, tutorUsername: this.authService.getUserSession().username  }
-    this.tutorService.submitSession({ ...this.sessionForm.value, ...other })
+    if (!this.isEditMode) { //create session
+      this.tutorService.submitSession({ ...this.sessionForm.value, ...other })
+    } else { //update session
+      this.tutorService.updateSession({ ...this.sessionForm.value, ...other }, this.sessionToEdit.id)
+    }
     this.closeDrawer()
+
   }
 
   deleteSession() {

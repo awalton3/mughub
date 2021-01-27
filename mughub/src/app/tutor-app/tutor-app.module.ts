@@ -23,12 +23,13 @@ import { SessionCardComponent } from './session-card/session-card.component';
 import { MatCardModule } from '@angular/material/card';
 import { SessionsComponent } from './sessions/sessions.component';
 import { StandardTimePipeModule } from '../shared/pipes/standard-time-pipe/standard-time-pipe.module';
-
+import { MonthStringPipeModule } from '../shared/pipes/month-string-pipe/month-string-pipe.module';
+import { ObjectKeysPipe } from '../shared/pipes/object-keys.pipe';
 
 @NgModule({
-  declarations: [TutorAppComponent, StudentsComponent, LogSessionComponent, AssignmentAddComponent, SessionCardComponent, SessionsComponent],
+  declarations: [TutorAppComponent, StudentsComponent, LogSessionComponent, AssignmentAddComponent, SessionCardComponent, SessionsComponent, ObjectKeysPipe],
   imports: [
-    CommonModule,
+  CommonModule,
     MaterialComponentsModule,
     FormsMaterialComponentsModule,
     TutorAppRoutingModule,
@@ -43,6 +44,7 @@ import { StandardTimePipeModule } from '../shared/pipes/standard-time-pipe/stand
     MatDialogModule,
     MatCardModule,
     StandardTimePipeModule,
+    MonthStringPipeModule
   ],
   providers: [
     MatDatepickerModule
