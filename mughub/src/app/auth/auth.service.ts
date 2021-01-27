@@ -170,7 +170,8 @@ export class AuthService {
     return studentRosterSheet.useServiceAccountAuth(googleSheetCreds)
       .then(() => {
         studentRosterSheet.loadInfo().then(() => {
-          let sheet = studentRosterSheet.sheetsByTitle['roster']
+          let sheet = studentRosterSheet.sheetsByTitle['roster-student']
+          console.log(sheet)
           //if !sheet create the sheet here
           sheet.addRow(studentData)
             .then(() => Promise.resolve())
