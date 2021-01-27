@@ -153,11 +153,13 @@
       </mat-expansion-panel>
 
     </mat-accordion>
-
-    <button matButton *ngIf="isEditMode" (click)="deleteSession()" class="color-warn" fxLayout="row" fxLayoutAlign="center center">
-      <i class="material-icons">delete</i>Delete Session
-    </button>
-
+    <br> <br>
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <button mat-button *ngIf="isEditMode" (click)="deleteSession()" class="color-warn" fxLayout="row" fxLayoutAlign="center center">
+        <i class="material-icons">delete</i>
+        <span>Delete Session</span>
+      </button>
+    </div>
   </form>
 </div>
 

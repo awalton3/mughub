@@ -52,7 +52,7 @@
   padding: 0px 25px;
 }
 
-fa-icon {
+fa-icon, i {
   width: 50px;
   font-size: 20px
 }
