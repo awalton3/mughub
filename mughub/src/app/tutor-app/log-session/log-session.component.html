@@ -1,0 +1,165 @@
+<mughub-headnav [title]="isEditMode ? 'Edit Session' : 'Upload Session'" iconLeft="close" (leftIconToggled)="closeDrawer()">
+</mughub-headnav>
+
+<div class="gutter-sm">
+  <form [formGroup]="sessionForm">
+
+    <mat-accordion class="example-headers-align">
+
+      <!-- General Info -->
+      <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <fa-icon [icon]="['fas', 'info-circle']" class="icon-sm content-icon"></fa-icon>
+            General Info
+          </mat-panel-title>
+          <mat-panel-description>
+            Student name, session date and time
+            <fa-icon *ngIf="!checkSectionValid('info')" [icon]="['far', 'circle']" class="color-gray icon-sm"></fa-icon>
+            <fa-icon *ngIf="checkSectionValid('info')" [icon]="['fas', 'check-circle']" class="color-success icon-sm"></fa-icon>
+
+            <!-- <fa-icon class="icon-sm" [ngClass]="checkSectionValid('info') ? 'color-success' : 'color-gray'"
+              [icon]="['fas', checkSectionValid('info') ? 'check-circle' : 'circle']"></fa-icon> -->
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-form-field>
+          <mat-label>Student Name</mat-label>
+          <input formControlName="studentName" matInput class="drawer-form-input">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Subject</mat-label>
+          <input formControlName="subject" matInput class="drawer-form-input">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Session Date</mat-label>
+          <input formControlName="date" matInput [matDatepicker]="sessionDatepicker" class="drawer-form-input">
+          <mat-datepicker-toggle matSuffix [for]="sessionDatepicker" color="accent"></mat-datepicker-toggle>
+          <mat-datepicker #sessionDatepicker color="accent"></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Time</mat-label>
+          <input type="time" formControlName="time" matInput class="drawer-form-input">
+        </mat-form-field>
+        <mat-action-row>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+
+      <!-- Learning Goals -->
+      <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <fa-icon [icon]="['fas', 'clipboard-list']" class="icon-sm content-icon"></fa-icon>
+            Learning Goals
+          </mat-panel-title>
+          <mat-panel-description>
+            Session objectives
+            <fa-icon *ngIf="!checkSectionValid('goals')" [icon]="['far', 'circle']" class="color-gray icon-sm"></fa-icon>
+            <fa-icon *ngIf="checkSectionValid('goals')" [icon]="['fas', 'check-circle']" class="color-success icon-sm"></fa-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-form-field fxFill>
+          <mat-label>Learning Session Objectives</mat-label>
+          <textarea matInput formControlName="learningGoals" cols="20" rows="10" placeholder="
+        Ex: Review prepositions of place
+              Review items in the classroom
+              Review question words
+              Review -ar present tense endings" class="drawer-form-input"></textarea>
+        </mat-form-field>
+        <mat-action-row>
+          <button mat-button color="primary" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+
+      <!-- Reflection -->
+      <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <fa-icon [icon]="['fas', 'lightbulb']" class="icon-sm content-icon"></fa-icon>
+            Reflection
+          </mat-panel-title>
+          <mat-panel-description>
+            Observations and Recommendations
+            <fa-icon *ngIf="!checkSectionValid('reflection')" [icon]="['far', 'circle']" class="color-gray icon-sm"></fa-icon>
+            <fa-icon *ngIf="checkSectionValid('reflection')" [icon]="['fas', 'check-circle']" class="color-success icon-sm"></fa-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <!-- Tips -->
+        <p class="color-base">
+          <fa-icon [icon]="['fas', 'lightbulb']" class="icon-xs content-icon color-accent"></fa-icon>
+          <span class="weight500">Pro Tip:</span> Be specific, don't forget the positives, and give constructive
+          criticism.
+        </p>
+
+        <mat-form-field fxFill>
+          <mat-label>Observations</mat-label>
+          <textarea matInput formControlName="observations" cols="30" rows="10"
+            placeholder="Ex: Bob did well with reading/ translating and writing sentences independently. For vocab review he could recall 11/13 classroom items, 4/7 question words, and 8/10 prepositions of place. He still needs work on conjugating the verb endings according to who is doing the action (I, you, he, she we etc)."
+            class="drawer-form-input"></textarea>
+        </mat-form-field>
+        <mat-form-field fxFill>
+          <mat-label>Recommendations</mat-label>
+          <textarea matInput formControlName="recommendations" cols="30" rows="10"
+            placeholder="Ex: Bob should remember to look for the person/ people who are doing the actions in each sentence to determine what present tense endings to use."
+            class="drawer-form-input"></textarea>
+        </mat-form-field>
+
+        <mat-radio-group formControlName="prepared" aria-label="Select an option" class="widthHalfPer">
+          <p>Was the student prepared? (paper and pencil handy, homework assignments completed, quiet space, minimum
+            interruptions)</p>
+          <mat-radio-button value="1">Yes</mat-radio-button>
+          <mat-radio-button value="0">No</mat-radio-button>
+        </mat-radio-group>
+
+        <mat-action-row>
+          <button mat-button color="primary" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+
+      <!-- Homework -->
+      <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <fa-icon [icon]="['fas', 'book']" class="icon-sm content-icon"></fa-icon>
+            Homework
+          </mat-panel-title>
+          <mat-panel-description>
+            Post-session Assignment
+            <fa-icon *ngIf="!checkSectionValid('homework')" [icon]="['far', 'circle']" class="color-gray icon-sm"></fa-icon>
+            <fa-icon *ngIf="checkSectionValid('homework')" [icon]="['fas', 'check-circle']" class="color-success icon-sm"></fa-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <button (click)="onAddAssignment()" mat-button color="accent" fxLayout="row" fxLayoutAlign="center center"><i class="material-icons content-icon">add</i>Add Assignment</button>
+
+        <mat-card *ngFor="let assignment of assignments; let idx = index" class="drawer-list-item background-eee gutter-sm" fxLayout="row" fxLayoutAlign="space-between center" style="width: 400px">
+          <div>
+            <h3><a href="{{ assignment.link }}" target="_blank">{{ assignment.title }}</a></h3>
+            <p class="keep-line-breaks">{{ assignment.instructions }}</p>
+          </div>
+          <i
+          (click)="removeAssignment(idx)"
+          class="material-icons cursor-pointer color-warn"
+          matRipple
+          [matRippleCentered]="centered">close</i>
+        </mat-card>
+
+        <mat-action-row>
+          <button mat-button color="primary" (click)="prevStep()">Previous</button>
+          <button (click)="submitSession()" mat-button color="accent" (click)="nextStep()" [disabled]="sessionForm.status === 'INVALID'">{{  isEditMode ? 'Save' : 'Submit'  }}</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+
+    </mat-accordion>
+    <br> <br>
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <button mat-button *ngIf="isEditMode" (click)="deleteSession()" class="color-warn" fxLayout="row" fxLayoutAlign="center center">
+        <i class="material-icons">delete</i>
+        <span>Delete Session</span>
+      </button>
+    </div>
+  </form>
+</div>
+

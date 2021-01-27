@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, ElementRef, Input } from '@angular/core';
 import { Subject } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -12,6 +12,7 @@ import { RosterService, Student } from '../roster.service';
 export class RosterAddComponent implements OnInit {
 
   @Output() onDrawerClose = new Subject();
+  @Input() userType: string;
 
   studentForm: FormGroup;
   // subjectForm: FormGroup;
@@ -32,8 +33,8 @@ export class RosterAddComponent implements OnInit {
       'email': new FormControl(null, Validators.email),
       // 'subjects': new FormControl(null, Validators.required),
       'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
-      'parentFirstName': new FormControl(null, Validators.required),
-      'parentLastName': new FormControl(null, Validators.required),
+      'parentFirstName': new FormControl(null),
+      'parentLastName': new FormControl(null),
       'parentEmail': new FormControl(null, Validators.email),
       'parentPhone': new FormControl(null, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
       'active': new FormControl(null)
@@ -42,6 +43,7 @@ export class RosterAddComponent implements OnInit {
     //   'subject': new FormGroup(null, Validators.required),
     //   'tutor': new FormGroup(null, Validators.required)
     // })
+
   }
 
   ngOnInit(): void {
@@ -108,7 +110,6 @@ export class RosterAddComponent implements OnInit {
   }
 
   updateRoster() {
-    console.log(this.studentForm.value)
     this.isEditMode ? this.editStudent() : this.addStudent()
   }
 }

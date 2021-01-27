@@ -1,0 +1,39 @@
+<mat-drawer-container [hasBackdrop]="false" class="heightFull">
+
+  <mat-drawer #editor mode="over" position="end" opened="false" class="side-content-drawer-half">
+    <app-log-session (onDrawerClose)="editor.close()"></app-log-session>
+  </mat-drawer>
+
+  <mat-drawer-content class="background-white heightFull">
+    <mughub-headnav title="Learning Sessions" iconLeft="menu" (leftIconToggled)="sidenavService.onToggle.next()">
+    </mughub-headnav>
+    <br>
+
+    <div *ngIf="loading" class=loader>loading...</div>
+
+    <div *ngIf="!loading && !sessions.length" fxLayout="column" fxLayoutAlign="center center" style="height: 80%">
+      <h2 class="color-base center-text">No Learning Session Logs yet.</h2>
+      <p style="width: 50%; text-align: center">Log each learning session by clicking on the add button below. This will give you access to records in the future and provider your student with the ability to see assignments.</p>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <div *ngFor="let date of sessionsByDate | objectKeys">
+        <div fxLayout="row" fxLayoutAlign="start center" class="date-header" style="padding-bottom: 7px">
+          <i class="material-icons icon-xs content-icon">calendar_today</i>
+          <p class="paddingNone marginNone">
+            {{ getDate(date).getMonth() | monthString | uppercase }} {{ getDate(date).getDate() }}</p>
+          </div>
+        <mat-divider></mat-divider>
+        <app-session-card class="cursor-pointer" (click)="editSession(session)" *ngFor="let session of sessionsByDate[date]" [session]="session"></app-session-card>
+      </div>
+    </div>
+
+    <div class="bottom-right-fab">
+      <button (click)="editor.open()" mat-fab color="accent">
+        <i class="material-icons" fxLayoutAlign="center center" style="color: white">add</i>
+      </button>
+    </div>
+
+  </mat-drawer-content>
+
+</mat-drawer-container>

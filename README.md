@@ -29,6 +29,8 @@ Uses an Angular 2+ front-end and Firebase back-end
   
   `npm install`
   
+  IMPORTANT: ADD `node: {crypto: true, stream: true}` to the node-modules/build-angular/src/webpack/configs/browser.js for Google Sheets API code to work
+  
 6. Run angular app 
 
   `ng serve`

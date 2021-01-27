@@ -11,6 +11,24 @@ p, h1, h2, h3, h4, h5, h6, span {
   font-family: 'Montserrat', sans-serif !important;
 }
 
+/* imported fonts */
+@font-face {
+  font-family: pencilpete;
+  src: url(assets/fonts/pencilpete-font/Pencilpetefont-844B.otf) format("opentype");
+}
+@font-face {
+  font-family: sketch;
+  src: url(assets/fonts/kg_second_chances/KGSecondChancesSketch.ttf) format("opentype");
+}
+
+.chalkBodyFont {
+  font-family: pencilpete !important;
+}
+
+.chalkTitleFont {
+  font-family: sketch !important;
+}
+
 /* common app css classes */
 .heightFull {
 	height: 100vh !important;
@@ -44,8 +62,20 @@ p, h1, h2, h3, h4, h5, h6, span {
 	background-color: #30546c !important;
 }
 
+.background-accent {
+  background-color: #ea9103 !important;
+}
+
 .paddingNone {
 	padding: 0 !important;
+}
+
+.marginNone {
+  margin: 0 !important;
+}
+
+.gutter-xs {
+  padding: 5px 20px !important;
 }
 
 .gutter-sm {
@@ -62,6 +92,62 @@ p, h1, h2, h3, h4, h5, h6, span {
 
 .app-font {
   font-family: 'Montserrat', sans-serif !important;
+}
+
+.icon-md {
+  font-size: 25px !important;
+}
+
+.icon-sm {
+  font-size: 20px !important;
+}
+
+.icon-xs {
+  font-size: 15px !important;
+}
+
+.color-base {
+  color: #30546c !important;
+}
+
+.color-accent {
+  color: #ea9103 !important;
+}
+
+.color-gray {
+  color: gray !important;
+}
+
+.color-black {
+  color: black !important;
+}
+
+.color-success-neon {
+  color: #3CFF94 !important;
+}
+
+.color-warn-neon {
+  color: #FF284D !important;
+}
+
+.color-success{
+  color: #3fa700;
+}
+
+.color-warn {
+  color: #de0005;
+}
+
+.weight500 {
+  font-weight: 500 !important;
+}
+
+.indent {
+  padding-left: 20px !important;
+}
+
+.keep-line-breaks {
+  white-space: pre-wrap !important;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -82,14 +168,10 @@ p, h1, h2, h3, h4, h5, h6, span {
   vertical-align: middle;
 }
 
-.marginNone {
-	margin: 0 !important;
-}
-
 .truncate {
   white-space: nowrap !important;
-  overflow: hidden !important;
   text-overflow: ellipsis !important;
+  overflow: hidden !important;
 }
 
 .bottom-right-fab {
@@ -219,6 +301,20 @@ p, h1, h2, h3, h4, h5, h6, span {
 	width: 500px !important;
 	height: 100% !important;
 	background-color: #ffffff !important;
+  color: black !important;
+}
+
+.side-content-drawer-half {
+  width: 50vw !important;
+  height: 100% !important;
+  background-color: #ffffff !important;
+  color: black !important;
+}
+
+.side-content-drawer-full {
+  width: 81vw !important;
+  height: 100% !important;
+  background-color: #ffffff !important;
   color: black !important;
 }
 

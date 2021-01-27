@@ -4,7 +4,7 @@ import 'firebase/firestore';
 import 'firebase/auth';
 import { SnackBarService } from '../shared/snack-bar/snack-bar.service';
 import { Router } from '@angular/router';
-import { Student } from '../admin-app/roster/roster.service';
+import { Student, Tutor } from '../admin-app/roster/roster.service';
 
 //const GoogleSpreadsheet = require('google-spreadsheet');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
@@ -47,15 +47,15 @@ export class AuthService {
   }
 
   getUserFromFireCollect(uid: string) {
-    return firebase.firestore().collection('/users').doc(uid).get();
+    return this.authref.doc(uid).get();
   }
 
   getUserByUsername(username: string) {
-    return firebase.firestore().collection('/users').where("username", '==', username).get()
+    return this.authref.where("username", '==', username).get()
   }
 
   editUserCollect(uid, userData) {
-    return firebase.firestore().collection('/users')
+    return this.authref
       .doc(uid)
       .set(Object.assign({}, userData))
     // .then(() => {
@@ -70,6 +70,10 @@ export class AuthService {
 
   createUserSession(user) {
     sessionStorage.setItem('user', JSON.stringify(user));
+  }
+
+  clearUserSession() {
+    sessionStorage.clear();
   }
 
   handleError(errorCode: any) {
@@ -153,20 +157,33 @@ export class AuthService {
   }
 
   registerStudent(student: Student) {
-    console.log(student);
     let base = (student.firstName + student.lastName).toLowerCase()
     return this.generateUsername(base)
       .then(username => {
         this.registerInAuth(username, student.password).then(userObj => {
           let other = { type: 'student', username: username, active: true }
           this.createUserInFirestore(userObj.user.uid, { ...student, ...other })
-            .then(() => Promise.resolve())
+            .then(() => Promise.resolve() /* add student to tutor's profile */)
             .catch(error => Promise.reject(error))
         }).catch(error => Promise.reject(error))
       }).catch(error => Promise.reject(error))
   }
 
-  addStudentToGoogleSheets(studentData) {
+  registerTutor(tutor: Tutor) {
+    console.log(tutor);
+    let base = (tutor.firstName + tutor.lastName).toLowerCase()
+    return this.generateUsername(base)
+      .then(username => {
+        console.log(username)
+        this.registerInAuth(username, tutor.password).then(userObj => {
+          let other = { type: 'tutor', username: username, active: true }
+          this.createUserInFirestore(userObj.user.uid, { ...tutor, ...other })
+            .then(() => Promise.resolve())
+            .catch(error => Promise.reject(error))
+        }).catch(error => Promise.reject(error))
+      }).catch(error => Promise.reject(error))
+  }
+ addStudentToGoogleSheets(studentData) {
     return studentRosterSheet.useServiceAccountAuth(googleSheetCreds)
       .then(() => {
         studentRosterSheet.loadInfo().then(() => {
@@ -178,5 +195,11 @@ export class AuthService {
             .catch(error => Promise.reject(error))
         }).catch(error => Promise.reject(error))
       }).catch(error => Promise.reject(error))
+ }
+  logout() {
+    if (confirm('Are you sure you would like to logout?')) {
+      this.clearUserSession()
+      firebase.auth().signOut()
+    }
   }
 }

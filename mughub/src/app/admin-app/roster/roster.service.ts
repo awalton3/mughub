@@ -5,6 +5,7 @@ import 'firebase/auth';
 import { Observable, Subject } from 'rxjs';
 // import { map } from 'rxjs/operators';
 
+
 const usersRef = firebase.firestore().collection('/users')
 const resourceRef = firebase.firestore().collection('/resources')
 
@@ -14,7 +15,17 @@ export interface Student {
   username: string,
   password: string,
   subjects: Array<{ subject: string, tutor: string }>,
-  email: string
+  email: string,
+  active: boolean
+}
+
+export interface Tutor {
+  firstName: string,
+  lastName: string,
+  username: string,
+  password: string,
+  email: string,
+  active: boolean
 }
 
 @Injectable({
@@ -26,6 +37,7 @@ export class RosterService {
   constructor() {}
 
   onEditStudent = new Subject<Student>();
+  onEditTutor = new Subject<Tutor>();
 
   getStudents() {
     return new Observable(observer => {
@@ -33,6 +45,17 @@ export class RosterService {
         let students = []
         querySnapshot.forEach(doc => students.push(doc.data()))
         observer.next(students)
+      })
+      return () => { unsubscribe(); }
+    })
+  }
+
+  getTutors() {
+    return new Observable(observer => {
+      const unsubscribe = usersRef.where("type", "==", "tutor").onSnapshot(querySnapshot => {
+        let tutors = []
+        querySnapshot.forEach(doc => tutors.push(doc.data()))
+        observer.next(tutors)
       })
       return () => { unsubscribe(); }
     })

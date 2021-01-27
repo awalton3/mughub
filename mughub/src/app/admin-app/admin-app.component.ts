@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router, NavigationStart, NavigationEnd, NavigationError, NavigationCancel } from '@angular/router';
 import { SidenavService } from '../shared/sidenav/sidenav.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-admin-app',
@@ -20,9 +21,9 @@ export class AdminAppComponent implements OnInit {
   }
 
   loading: boolean = true;
-  views = [ { name: 'Roster', icon: 'groups' }, { name: 'Resources', icon: 'school' } ]
+  views = [ { name: 'Rosters', faIcon: 'users' }, { name: 'Resources', faIcon: 'chalkboard-teacher' }, { name: 'Website', maIcon: 'web'}]
 
-  constructor(private sidenavService: SidenavService, private router: Router) {
+  constructor(private sidenavService: SidenavService, private router: Router, public authService: AuthService) {
     router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.loading = true;

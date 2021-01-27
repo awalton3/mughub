@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular
 import { SidenavService } from '../../shared/sidenav/sidenav.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { RosterService, Student } from './roster.service';
+import { RosterService, Student, Tutor } from './roster.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -16,37 +16,55 @@ export class RosterComponent implements OnInit, OnDestroy {
   constructor(
     private sidenavService: SidenavService,
     private rosterService: RosterService
-    ) { }
+  ) { }
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('editor', { static: false }) editor: any;
 
   private subs = new Subscription();
   displayedColumns: string[] = ['firstName', 'lastName', 'username', 'password'];
-  dataSource: any;
-  //testData = [];
+  dataStudents: any;
+  dataTutors: any;
   editorData: any;
+  userType: any;
 
   ngOnInit(): void {
-    //this.testData = ['apple', 'orange', 'potato']
     this.subs.add(this.rosterService.getStudents()
       .subscribe((students: Array<Student>) => {
-        this.dataSource = new MatTableDataSource(students)
-        this.dataSource.sort = this.sort;
+        this.dataStudents = new MatTableDataSource(students)
+      }))
+
+    this.subs.add(this.rosterService.getTutors()
+      .subscribe((tutors: Array<Tutor>) => {
+        this.dataTutors = new MatTableDataSource(tutors)
       }))
   }
-
-  // ngAfterViewInit() {
-  //   this.dataSource.sort = this.sort;
-  // }
 
   testing(event) {
     console.log(event);
   }
 
+  addStudent() {
+    this.userType = 'student';
+    this.editor.open()
+  }
+
+  addTutor() {
+    this.userType = 'tutor';
+    this.editor.open()
+  }
+
   editStudent(student: Student) {
     //send drawer component the data to edit
+    this.userType = 'student';
     this.rosterService.onEditStudent.next(student)
+    this.editor.open()
+  }
+
+  editTutor(tutor: Tutor) {
+    //send drawer component the data to edit
+    this.rosterService.onEditTutor.next(tutor)
+    this.userType = 'tutor';
     this.editor.open()
   }
 

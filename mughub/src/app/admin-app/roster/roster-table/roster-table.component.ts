@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output, ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
 import { RosterService } from '../roster.service';
 import { Subject } from 'rxjs';
 
@@ -12,24 +13,15 @@ export class RosterTableComponent implements OnInit {
   @Input() data: any;
   @Input() displayedColumns;
   @Output() onRowClick = new Subject();
-
-  //test = 'this is a test.';
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private rosterService: RosterService) { }
 
   ngOnInit(): void {
-    console.log("Table data: ", this.data);
   }
 
-  // onEditStudent() {
-  //   this.onRowClick.next()
-  // }
-
-  // editStudent(student) {
-  //   console.log(student)
-  //   //send drawer component the data to edit
-  //   // this.rosterService.onEditStudent.next(student)
-  //   // this.editor.open()
-  // }
+  ngAfterViewInit() {
+    this.data.sort = this.sort;
+  }
 
 }

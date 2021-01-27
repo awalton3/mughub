@@ -12,7 +12,7 @@ iconRight="done"
     <!-- Profile Info -->
     <p class="drawer-form-label" style="vertical-align: middle;">
       <i class="material-icons drawer-form-icon">person</i>
-      {{'Profile' | uppercase }}
+      {{'Student Profile' | uppercase }}
     </p>
     <div fxLayout="row" fxLayoutAlign="center center">
       <mat-form-field  class="widthHalfPer">
@@ -22,21 +22,15 @@ iconRight="done"
         <input type="text" matInput formControlName="lastName" placeholder="Last name" class="drawer-form-input">
       </mat-form-field>
     </div>
-    <!-- <mat-form-field fxFill>
-      <input type="text" matInput formControlName="subjects" placeholder="Subjects" class="drawer-form-input">
-    </mat-form-field> -->
-    <!-- <app-input-autocomplete formControlName="subjects" [formLabel]="'Subject'"></app-input-autocomplete> -->
-
-    <br>
 
     <!-- Grade Level -->
-    <p class="drawer-form-label" style="vertical-align: middle;">
+    <!-- <p class="drawer-form-label" style="vertical-align: middle;">
       <i class="material-icons drawer-form-icon">class</i>
       {{'Grade Level' | uppercase }}
-    </p>
+    </p> -->
     <div class="example-container">
-      <mat-form-field class="widthHalfPer">
-        <mat-label>Select your grade level</mat-label>
+      <mat-form-field class="widthFullPer">
+        <mat-label>Select Grade Level</mat-label>
         <mat-select formControlName="gradeLevel">
           <mat-option label=" "></mat-option>
           <mat-option value="elementary">Elementary School</mat-option>
@@ -45,19 +39,32 @@ iconRight="done"
           <mat-option value="adult">Adult Learner</mat-option>
         </mat-select>
       </mat-form-field>
-    </div> 
+    </div>
 
-      <!-- <br *ngIf="subjects.length">
-      <mat-card *ngFor="let subject of subjects; let idx = index" class="widthFullPer drawer-list-item background-eee" fxLayout="row" fxLayoutAlign="space-between center">
-        <span>{{ subject.subject }} ({{ subject.tutor }})</span>
-        <i
-        (click)="removeSubject(idx)"
-        class="material-icons cursor-pointer"
-        style="color: red;"
-        matRipple
-        [matRippleCentered]="centered">close</i>
-      </mat-card>  
-    </div> -->
+    <br>
+
+   <!-- Parent Information -->
+   <p class="drawer-form-label" style="vertical-align: middle;">
+    <i class="material-icons drawer-form-icon">contact_page</i>
+    {{'Parent/Guardian Information' | uppercase }}
+  </p>
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <mat-form-field  class="widthHalfPer">
+      <input type="text" matInput formControlName="parentFirstName" placeholder="First name" class="drawer-form-input">
+    </mat-form-field>
+    <mat-form-field class="widthHalfPer">
+      <input type="text" matInput formControlName="parentLastName" placeholder="Last name" class="drawer-form-input">
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <mat-form-field class="widthHalfPer">
+      <input type="text" matInput formControlName="parentEmail" placeholder="Email (optional)" class="drawer-form-input">
+    </mat-form-field>
+    <mat-form-field class="widthHalfPer">
+      <input type="text" matInput formControlName="parentPhone" placeholder="Phone Number" class="drawer-form-input">
+    </mat-form-field>
+  </div>
 
     <br>
 
@@ -120,38 +127,15 @@ iconRight="done"
       </mat-form-field>
     </div>
 
+    <div *ngIf="isEditMode" fxLayout="row" fxLayoutAlign="right" class="drawer-form-input">
+      <mat-slide-toggle matInput formControlName="active" class="app-font"><span style="vertical-align: middle;">Active student</span></mat-slide-toggle>
+    </div>
+
     <br>
-
-    <!-- Parent Information -->
-    <p class="drawer-form-label" style="vertical-align: middle;">
-      <i class="material-icons drawer-form-icon">contact_page</i>
-      {{'Parent/Guardian Information' | uppercase }}
-    </p>
-    <div fxLayout="row" fxLayoutAlign="center center">
-      <mat-form-field  class="widthHalfPer">
-        <input type="text" matInput formControlName="parentFirstName" placeholder="First name" class="drawer-form-input">
-      </mat-form-field>
-      <mat-form-field class="widthHalfPer">
-        <input type="text" matInput formControlName="parentLastName" placeholder="Last name" class="drawer-form-input">
-      </mat-form-field>
-    </div>
-
-    <div fxLayout="row" fxLayoutAlign="center center">
-      <mat-form-field class="widthHalfPer">
-        <input type="text" matInput formControlName="parentEmail" placeholder="Email (optional)" class="drawer-form-input">
-      </mat-form-field>
-      <mat-form-field class="widthHalfPer">
-        <input type="text" matInput formControlName="parentPhone" placeholder="Phone Number" class="drawer-form-input">
-      </mat-form-field>
-    </div>
 
     <!-- <mat-form-field fxFill>
       <input type="text" matInput formControlName="email" placeholder="Email (optional)" class="drawer-form-input">
     </mat-form-field> -->
-
-    <div *ngIf="isEditMode" fxLayout="row" fxLayoutAlign="right" class="drawer-form-input">
-      <mat-slide-toggle matInput formControlName="active" class="app-font"><span style="vertical-align: middle;">Active student</span></mat-slide-toggle>
-    </div>
 
   </form>
 

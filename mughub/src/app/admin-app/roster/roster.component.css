@@ -16,4 +16,12 @@ tr.mat-row:hover {
   border: 1px solid #ea9103 !important;
 }
 
+:host ::ng-deep .mat-tab-label .mat-tab-label-content {
+  font-family: 'Montserrat', sans-serif !important;
+  color: #30546c !important;
+}
+
+:host ::ng-deep .mat-tab-label {
+  color: #30546c !important;
+}
 
