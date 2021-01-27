@@ -45,8 +45,8 @@ export class LogSessionComponent implements OnInit {
   listenForEditRequests() {
     this.tutorService.onEditSession.subscribe(sessionToEdit => {
       this.isEditMode = true;
-      sessionToEdit.date = new Date(sessionToEdit.date.seconds * 1000) //create date object in miliseconds
       this.sessionForm.patchValue(sessionToEdit) //prefill form
+      this.sessionForm.patchValue({ date: new Date(sessionToEdit.date.seconds * 1000) }) //create date object in miliseconds
       this.assignments = sessionToEdit.homework
       this.sessionToEdit = sessionToEdit
     })

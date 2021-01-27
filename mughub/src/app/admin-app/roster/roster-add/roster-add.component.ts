@@ -107,7 +107,6 @@ export class RosterAddComponent implements OnInit {
   }
 
   updateRoster() {
-    console.log(this.studentForm.value)
     this.isEditMode ? this.editStudent() : this.addStudent()
   }
 }

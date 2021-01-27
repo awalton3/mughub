@@ -170,8 +170,8 @@ p, h1, h2, h3, h4, h5, h6, span {
 
 .truncate {
   white-space: nowrap !important;
-  overflow: hidden !important;
   text-overflow: ellipsis !important;
+  overflow: hidden !important;
 }
 
 .bottom-right-fab {

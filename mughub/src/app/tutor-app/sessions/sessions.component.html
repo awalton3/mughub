@@ -11,7 +11,10 @@
 
     <div *ngIf="loading" class=loader>loading...</div>
 
-    <div *ngIf="!loading && !sessions.length">No sessions</div>
+    <div *ngIf="!loading && !sessions.length" fxLayout="column" fxLayoutAlign="center center" style="height: 80%">
+      <h2 class="color-base center-text">No Learning Session Logs yet.</h2>
+      <p style="width: 50%; text-align: center">Log each learning session by clicking on the add button below. This will give you access to records in the future and provider your student with the ability to see assignments.</p>
+    </div>
 
     <div fxLayout="column" fxLayoutAlign="center center">
       <div *ngFor="let date of sessionsByDate | objectKeys">

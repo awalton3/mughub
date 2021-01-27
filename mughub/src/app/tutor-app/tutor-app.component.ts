@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router, NavigationStart, NavigationEnd, NavigationError, NavigationCancel } from '@angular/router';
 import { SidenavService } from '../shared/sidenav/sidenav.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-tutor-app',
@@ -25,7 +26,7 @@ export class TutorAppComponent implements OnInit {
     { name: 'Sessions', faIcon: 'clipboard-list', link: 'sessions' },
   ]
 
-  constructor(private sidenavService: SidenavService, private router: Router) {
+  constructor(private sidenavService: SidenavService, private router: Router, public authService: AuthService) {
     router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.loading = true;

@@ -8,10 +8,12 @@ import { Component, OnInit, Input } from '@angular/core';
 export class SessionCardComponent implements OnInit {
 
   @Input() session: any;
+  goals = []
 
   constructor() { }
 
   ngOnInit(): void {
+    this.goals = this.session.learningGoals.split("\n")
   }
 
 }

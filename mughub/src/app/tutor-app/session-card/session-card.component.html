@@ -17,9 +17,7 @@
         <p class="paddingNone marginNone card-section-title chalkTitleFont">Learning Goals</p>
       </div>
       <ul class="chalkBodyFont">
-        <li>Goal number one</li>
-        <li>Goal number two</li>
-        <li>Goal number three</li>
+        <li *ngFor="let goal of goals">{{ goal }}</li>
       </ul>
       <div class="card-section" fxLayout="row" fxLayoutAlign="start center">
         <fa-icon [icon]="['fas', 'lightbulb']" class="icon-sm content-icon"></fa-icon>
@@ -39,8 +37,10 @@
         <fa-icon [icon]="['fas', 'book']" class="icon-sm content-icon"></fa-icon>
         <p class="paddingNone marginNone card-section-title chalkTitleFont">Homework</p>
       </div>
-      <ul class="chalkBodyFont">
-        <li *ngFor="let assignment of session.homework" class="truncate">{{ assignment.title }}: {{assignment.instructions}}</li>
+      <ul class="chalkBodyFont" class="widthFullPer">
+        <li *ngFor="let assignment of session.homework" class="widthFullPer">
+          <p class="chalkBodyFont truncate" style="width: 90%">{{ assignment.title }}: {{assignment.instructions}}</p>
+        </li>
       </ul>
   </mat-card-content>
 </mat-card>
