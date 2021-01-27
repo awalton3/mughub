@@ -29,15 +29,15 @@ export class RosterAddComponent implements OnInit {
     this.studentForm = new FormGroup({
       'firstName': new FormControl(null, Validators.required),
       'lastName': new FormControl(null, Validators.required),
+      'gradeLevel': new FormControl(null, Validators.required),
       'email': new FormControl(null, Validators.email),
       // 'subjects': new FormControl(null, Validators.required),
       'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
       'parentFirstName': new FormControl(null),
       'parentLastName': new FormControl(null),
       'parentEmail': new FormControl(null, Validators.email),
-      'gradeLevel': new FormControl(null),
+      'parentPhone': new FormControl(null, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
       'active': new FormControl(null)
-      // 'phone': new FormControl(null, [Validators.required, Validators.pattern("[0-9]{10}")])
     })
     // this.subjectForm = new FormGroup({
     //   'subject': new FormGroup(null, Validators.required),
@@ -63,8 +63,11 @@ export class RosterAddComponent implements OnInit {
     let subjects = { subjects: this.subjects }
     this.authService.registerStudent({ ...this.studentForm.value, ...subjects })
       .then(onSuccess => {
-        this.authService.onSuccess("Student added to roster")
-        this.closeDrawer()
+        this.authService.addStudentToGoogleSheets(this.studentForm.value)
+          .then(onSuccess => {
+            this.authService.onSuccess("Student added to roster")
+            this.closeDrawer()
+          }).catch(error => console.log(error))
       })
       .catch(error => console.log(error)) //need more action here
   }

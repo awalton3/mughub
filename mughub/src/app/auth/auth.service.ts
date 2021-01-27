@@ -6,6 +6,11 @@ import { SnackBarService } from '../shared/snack-bar/snack-bar.service';
 import { Router } from '@angular/router';
 import { Student, Tutor } from '../admin-app/roster/roster.service';
 
+//const GoogleSpreadsheet = require('google-spreadsheet');
+const { GoogleSpreadsheet } = require('google-spreadsheet');
+const studentRosterSheet = new GoogleSpreadsheet('1tvlO0a618AMi2DRs64_Z3V-GYd5YyPs5TSkPpPR5Fdk');
+const googleSheetCreds = require('../../assets/sheets/credentials.json');
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,7 +21,7 @@ export class AuthService {
   constructor(
     private snackbarService: SnackBarService,
     private router: Router
-  ) {}
+  ) { }
 
   authref = firebase.firestore().collection('/users')
 
@@ -53,10 +58,10 @@ export class AuthService {
     return this.authref
       .doc(uid)
       .set(Object.assign({}, userData))
-      // .then(() => {
-      //   //this.router.navigate(['/mughub/login']);
-      // })
-      // .catch(error => console.log(error))
+    // .then(() => {
+    //   //this.router.navigate(['/mughub/login']);
+    // })
+    // .catch(error => console.log(error))
   }
 
   getUserSession() {
@@ -124,7 +129,7 @@ export class AuthService {
 
   getUsersOrderByUsername(name: string) {
     // returns all usernames that startWith input string
-    return this.authref.orderBy('username').startAt(name).endAt(name+"\uf8ff").get()
+    return this.authref.orderBy('username').startAt(name).endAt(name + "\uf8ff").get()
   }
 
   generateUsername(name: string) {
@@ -140,7 +145,7 @@ export class AuthService {
           return Number(match.data().username.substring(name.length))
         })
         return Promise.resolve(name + (Math.max(...nums) + 1))
-    })
+      })
   }
 
   createUserInFirestore(uid, userData) {
@@ -178,7 +183,19 @@ export class AuthService {
         }).catch(error => Promise.reject(error))
       }).catch(error => Promise.reject(error))
   }
-
+ addStudentToGoogleSheets(studentData) {
+    return studentRosterSheet.useServiceAccountAuth(googleSheetCreds)
+      .then(() => {
+        studentRosterSheet.loadInfo().then(() => {
+          let sheet = studentRosterSheet.sheetsByTitle['roster-student']
+          console.log(sheet)
+          //if !sheet create the sheet here
+          sheet.addRow(studentData)
+            .then(() => Promise.resolve())
+            .catch(error => Promise.reject(error))
+        }).catch(error => Promise.reject(error))
+      }).catch(error => Promise.reject(error))
+ }
   logout() {
     if (confirm('Are you sure you would like to logout?')) {
       this.clearUserSession()
