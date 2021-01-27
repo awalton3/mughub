@@ -52,6 +52,11 @@
   padding: 0px 25px;
 }
 
+fa-icon {
+  width: 50px;
+  font-size: 20px
+}
+
 @media only screen and (max-width: 300px) {
   /* ::ng-deep .mat-list-item-content {
     padding: 0px 120px !important;

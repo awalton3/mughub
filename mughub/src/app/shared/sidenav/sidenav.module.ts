@@ -6,7 +6,7 @@ import { MaterialComponentsModule } from 'src/app/shared/angular-material/materi
 import { RouterModule } from '@angular/router';
 
 //Font-awesome icons
-import { faClipboardList, faUsers, faUserShield, faChalkboardTeacher, faUserGraduate } from '@fortawesome/free-solid-svg-icons';
+import { faClipboardList, faUsers, faUserShield, faChalkboardTeacher, faUserGraduate, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 
 /* MUST IMPORTANT FA ICONS BELOW IN CONSTRUCTOR */
@@ -28,6 +28,6 @@ import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontaweso
 export class SidenavModule {
   constructor(private library: FaIconLibrary) {
      //font-awesome icons
-     library.addIcons(faClipboardList, faUsers, faUserShield, faChalkboardTeacher, faUserGraduate)
+     library.addIcons(faClipboardList, faUsers, faUserShield, faChalkboardTeacher, faUserGraduate, faSignOutAlt)
   }
 }

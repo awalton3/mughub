@@ -42,15 +42,15 @@ export class AuthService {
   }
 
   getUserFromFireCollect(uid: string) {
-    return firebase.firestore().collection('/users').doc(uid).get();
+    return this.authref.doc(uid).get();
   }
 
   getUserByUsername(username: string) {
-    return firebase.firestore().collection('/users').where("username", '==', username).get()
+    return this.authref.where("username", '==', username).get()
   }
 
   editUserCollect(uid, userData) {
-    return firebase.firestore().collection('/users')
+    return this.authref
       .doc(uid)
       .set(Object.assign({}, userData))
       // .then(() => {
@@ -65,6 +65,10 @@ export class AuthService {
 
   createUserSession(user) {
     sessionStorage.setItem('user', JSON.stringify(user));
+  }
+
+  clearUserSession() {
+    sessionStorage.clear();
   }
 
   handleError(errorCode: any) {
@@ -173,5 +177,12 @@ export class AuthService {
             .catch(error => Promise.reject(error))
         }).catch(error => Promise.reject(error))
       }).catch(error => Promise.reject(error))
+  }
+
+  logout() {
+    if (confirm('Are you sure you would like to logout?')) {
+      this.clearUserSession()
+      firebase.auth().signOut()
+    }
   }
 }

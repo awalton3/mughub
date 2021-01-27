@@ -1,6 +1,6 @@
 <mat-drawer-container class="heightFull">
     <mat-drawer #navDrawer class="sidenav">
-      <mughub-sidenav (closeNav)="navDrawer.close()" [navLinks]="views" navUserIcon="user-shield"></mughub-sidenav>
+      <mughub-sidenav (closeNav)="navDrawer.close()" [navLinks]="views" navUserIcon="user-shield" [includeLogout]="true" (onLogout)="authService.logout()"></mughub-sidenav>
     </mat-drawer>
     <mat-drawer-content *ngIf="!loading" class="background-white paddingNone">
       <router-outlet></router-outlet>

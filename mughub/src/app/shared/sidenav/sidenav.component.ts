@@ -15,7 +15,9 @@ export class SidenavComponent implements OnInit, OnDestroy {
       You must also ADD ICON TO LIBRARY in sidenav module to use */
   @Input() navLinks: Array<{ name: String, faIcon: String, link: String}>;
   @Input() navUserIcon?: string;
+  @Input() includeLogout?: boolean;
   @Output() closeNav = new Subject();
+  @Output() onLogout? = new Subject();
 
   user: any;
   screenWidth: any;
@@ -25,7 +27,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.screenWidth = window.innerWidth;
   }
 
-  constructor(/*private userService: UserService,*/ private router: Router, private route: ActivatedRoute) { }
+  constructor( private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.user = JSON.parse(sessionStorage.getItem('user'));
@@ -33,6 +35,11 @@ export class SidenavComponent implements OnInit, OnDestroy {
     //this.defaultNavLinksArr = Object.keys(this.defaultNavLinks);
     this.screenWidth = window.innerWidth;
   }
+
+  logout() {
+    this.onLogout.next()
+  }
+
 
   // getDefaultNavLinks() {
   //   // this.defaultNavLinks = {
