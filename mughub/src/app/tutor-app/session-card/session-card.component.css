@@ -1,0 +1,54 @@
+mat-card {
+  min-width: 300px;
+  width: 500px;
+  height: 500px;
+  min-height: 500px;
+  padding: 0;
+  background: #eee;
+  margin: 30px 10px;
+  overflow-y: scroll;
+}
+
+.card-header {
+  padding: 15px;
+  font-family: 'Montserrat', sans-serif !important
+}
+
+.card-section {
+  padding: 5px;
+}
+
+.card-section-title {
+  font-size: 19px;
+  margin-bottom: 10px;
+}
+
+.chalkboard {
+  background: url('../../../assets/images/chalkboard-blue.jpg');
+  background-position: cover;
+  color: white;
+  padding: 15px;
+  height: 80%;
+}
+
+ul li {
+  display: list-item;
+  font-size: 17px;
+  width: 330px;
+}
+
+.section-content {
+  font-size: 17px;
+}
+
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* mat-card-content p, mat-card-content fa-icon {
+  color: #30546c;
+  font-weight: 500
+} */

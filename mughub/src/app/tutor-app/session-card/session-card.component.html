@@ -1,0 +1,46 @@
+<mat-card>
+  <div class="card-header" fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <div mat-card-avatar class="example-header-image background-accent"></div>
+      <div class="indent">
+        <p class="paddingNone marginNone section-title">{{ session.studentName }}</p>
+        <p class="paddingNone marginNone color-gray">{{ session.subject }}</p>
+      </div>
+    </div>
+    <div>
+      <p class="color-gray">{{ session.time | standardTime }}</p>
+    </div>
+  </div>
+  <mat-card-content class="chalkboard">
+      <div class="card-section" fxLayout="row" fxLayoutAlign="start center">
+        <fa-icon [icon]="['fas', 'clipboard-list']" class="icon-sm content-icon"></fa-icon>
+        <p class="paddingNone marginNone card-section-title chalkTitleFont">Learning Goals</p>
+      </div>
+      <ul class="chalkBodyFont">
+        <li>Goal number one</li>
+        <li>Goal number two</li>
+        <li>Goal number three</li>
+      </ul>
+      <div class="card-section" fxLayout="row" fxLayoutAlign="start center">
+        <fa-icon [icon]="['fas', 'lightbulb']" class="icon-sm content-icon"></fa-icon>
+        <p class="paddingNone marginNone card-section-title chalkTitleFont">Reflections</p>
+      </div>
+      <br>
+      <!-- <fa-icon [icon]="['fas', session.studentPrepared]" class="icon-sm content-icon"></fa-icon> -->
+
+      <p class="chalkBodyFont indent section-content line-clamp">
+        Observations: {{ session.observations }}
+      </p>
+      <p class="chalkBodyFont indent section-content line-clamp">
+        Recommendations: {{ session.recommendations }}
+      </p>
+
+      <div class="card-section" fxLayout="row" fxLayoutAlign="start center">
+        <fa-icon [icon]="['fas', 'book']" class="icon-sm content-icon"></fa-icon>
+        <p class="paddingNone marginNone card-section-title chalkTitleFont">Homework</p>
+      </div>
+      <ul class="chalkBodyFont">
+        <li *ngFor="let assignment of session.homework" class="truncate">{{ assignment.title }}: {{assignment.instructions}}</li>
+      </ul>
+  </mat-card-content>
+</mat-card>

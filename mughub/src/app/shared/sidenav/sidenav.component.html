@@ -7,31 +7,15 @@
 
   <div fxLayout="column" fxLayoutAlign="center center">
     <!-- <div class="profile-image-container profile-image-border" [ngStyle]="{'background-image': 'url(https://lh3.googleusercontent.com/fife/ABSRlIp5GqrEdcqTM4PpXVwuNfKbMElbfHOAmiR0D8RZ9A07v_-AGNkHhuRAaELxK4GnJhTnmXDmL8gUjMT3k1MwyFCOTIdJ4XquNumGLMAbSTHuD6saAsY0bz0ZSbURf5qW1mYP8Jk3wffwG0b0PCPYaROz10hGaVCriiTphW9sqA2HdYRCshrEoD8F0M_9nVztGxsxod9ohG-6aCYGCFPBE196b0G1Ap5cYQUH5YaU3pl-uT1RpbKHIBLTi7Kv3WXZEEA9rs8VJ_WSMwFGFVdY-GOAOt5lJZQvbky0xVx-vxwBq40wJG_WYvbSrcz_JJuyFBoTEJ3nWgIeWAM7T-yEUb_AOwOk9Rgkec3Ezgc8X3w_ptCQKZKmDNfiUQb_Hztv5Vwsa_6b_zkd15_O1AvBGqwP51yeJp97RM9xa6haQqdFo86PONrGvY_jZjLbVfRXC94f9NFSBgLLJ9Q2mJg1O8J5XzPser9a4gsQTk3gke9URWfSLk_nsZr7jTUQ0ojzA3SWWyE1PpT4CuRyk7i6VLAZQQQd9TA66bBg99k3g1CVWGOgxY-3pyu9jOIAB-cLld7_fojIPqetx6-6a8ThUZfUf4Of8_9RdZD8NVkWS39ahoK9BFO94JhYoRobBHKEG9XdUzc2eSq4-3GxQ3qetrte5J4CTP_nyyQYtNbR7ISy6Mqnor0sez3pFC0kLT3_seOGO8gXKCp0019jaTSW6duOTyWtl_GjvI7imwfUOAw3Pw=s64-c)'}"></div> -->
-    <i class="material-icons">{{ user.type == 'admin' ? 'admin_panel_settings' : 'school'}}</i>
+    <fa-icon *ngIf="navUserIcon" class="icon-md" [icon]="['fas', navUserIcon]"></fa-icon>
     <br>
     <p class="profile-name">Welcome, {{ user.firstName }}!</p>
   </div>
 
-  <!-- <div class="widthFullPer" fxLayout="column" fxLayoutAlign="center center">
-    <div *ngFor="let link of defaultNavLinksArr" class="widthFullPer" (click)="navigate(link)">
-      <div (click)="toggleSubLinks(link)" fxLayout="row" fxLayoutAlign="start center" class="sideDrawer-links" matRipple>
-        <i class="material-icons sideDrawer-link-icon">{{ getIconLink(link) }}</i>
-        <i class="material-icons sideDrawer-link-icon">people</i>
-        <p>{{ link | uppercase }}</p>
-      </div>
-      <div *ngIf="showSubLinks" style="margin-left: 75px;" class="fade-in">
-        <div (click)="navigateToSublink(sublink)" *ngFor="let sublink of defaultNavLinks[link]" class="sideDrawer-sublinks" fxLayout="row" fxLayoutAlign="start center" matRipple [matRippleCentered]="['true']" [matRippleRadius]="25">
-          <i class="material-icons sideDrawer-link-icon" style="font-size: 18px;">{{ getIconLink(sublink) }}</i>
-          <p style="text-transform: capitalize">{{ sublink }}</p>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
-  <div class="widthFullPer" fxLayout="column" fxLayoutAlign="center center">
-    <div *ngFor="let link of navLinks" class="widthFullPer" (click)="navigate(link.name)" >
+  <div class="widthFullPer" fxLayout="column" fxLayoutAlign="start start">
+    <div *ngFor="let link of navLinks" class="widthFullPer" (click)="navigate(link)" >
       <div fxLayout="row" fxLayoutAlign="start center" class="sideDrawer-links" matRipple>
-        <i class="material-icons sideDrawer-link-icon">{{ link.icon }}</i>
+        <fa-icon fxLayout="row" fxLayoutAlign="center center"  [icon]="['fas', link.faIcon]" style="width: 50px; font-size: 20px"></fa-icon>
         <div fxLayout="row" fxLayoutAlign="center center">{{ link.name }}</div>
       </div>
     </div>

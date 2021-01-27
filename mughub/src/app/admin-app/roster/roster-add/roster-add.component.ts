@@ -32,8 +32,8 @@ export class RosterAddComponent implements OnInit {
       'email': new FormControl(null, Validators.email),
       // 'subjects': new FormControl(null, Validators.required),
       'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
-      'parentFirstName': new FormControl(null, Validators.required),
-      'parentLastName': new FormControl(null, Validators.required),
+      'parentFirstName': new FormControl(null),
+      'parentLastName': new FormControl(null),
       'parentEmail': new FormControl(null, Validators.email),
       'gradeLevel': new FormControl(null),
       'active': new FormControl(null)

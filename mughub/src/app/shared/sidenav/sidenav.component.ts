@@ -1,7 +1,5 @@
 import { Component, OnInit, Output, HostListener, OnDestroy, Input } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
-//import { UserService } from '../auth/user.service';
-//import { User } from '../auth/user.model';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -13,12 +11,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class SidenavComponent implements OnInit, OnDestroy {
 
   private subs = new Subscription();
-  @Input() navLinks: Array<{ name: String, icon: String}>;
+  /* icon attribute represents name of icon in font-awesome library;
+      You must also ADD ICON TO LIBRARY in sidenav module to use */
+  @Input() navLinks: Array<{ name: String, faIcon: String, link: String}>;
+  @Input() navUserIcon?: string;
   @Output() closeNav = new Subject();
-  //defaultNavLinks = {};
-  //defaultNavLinksArr = [];
-  user: any;
 
+  user: any;
   screenWidth: any;
 
   @HostListener('window:resize', ['$event'])
@@ -29,7 +28,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
   constructor(/*private userService: UserService,*/ private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    //console.log(this.navLinks)
     this.user = JSON.parse(sessionStorage.getItem('user'));
     // this.getDefaultNavLinks();
     //this.defaultNavLinksArr = Object.keys(this.defaultNavLinks);
@@ -76,7 +74,11 @@ export class SidenavComponent implements OnInit, OnDestroy {
   //   }
   // }
 
-  navigate(link: string) {
+  navigate(endpoint) {
+    let link = endpoint.link
+    if (!endpoint.link) {
+      link = endpoint.name
+    }
     this.router.navigate([link.toLowerCase()], {relativeTo: this.route})
     // if (link === 'mail') {
     //   // this.router.navigate(['mailhub/inbox'], { relativeTo: this.route });
