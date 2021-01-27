@@ -6,6 +6,14 @@ import { SnackBarService } from '../shared/snack-bar/snack-bar.service';
 import { Router } from '@angular/router';
 import { Student } from '../admin-app/roster/roster.service';
 
+//const GoogleSpreadsheet = require('google-spreadsheet');
+const { GoogleSpreadsheet } = require('google-spreadsheet');
+const studentRosterSheet = new GoogleSpreadsheet('1tvlO0a618AMi2DRs64_Z3V-GYd5YyPs5TSkPpPR5Fdk');
+
+const creds = require('../../assets/sheets/credentials.json');
+
+console.log(studentRosterSheet)
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,7 +24,7 @@ export class AuthService {
   constructor(
     private snackbarService: SnackBarService,
     private router: Router
-  ) {}
+  ) { }
 
   authref = firebase.firestore().collection('/users')
 
@@ -53,10 +61,10 @@ export class AuthService {
     return firebase.firestore().collection('/users')
       .doc(uid)
       .set(Object.assign({}, userData))
-      // .then(() => {
-      //   //this.router.navigate(['/mughub/login']);
-      // })
-      // .catch(error => console.log(error))
+    // .then(() => {
+    //   //this.router.navigate(['/mughub/login']);
+    // })
+    // .catch(error => console.log(error))
   }
 
   getUserSession() {
@@ -120,7 +128,7 @@ export class AuthService {
 
   getUsersOrderByUsername(name: string) {
     // returns all usernames that startWith input string
-    return this.authref.orderBy('username').startAt(name).endAt(name+"\uf8ff").get()
+    return this.authref.orderBy('username').startAt(name).endAt(name + "\uf8ff").get()
   }
 
   generateUsername(name: string) {
@@ -136,7 +144,7 @@ export class AuthService {
           return Number(match.data().username.substring(name.length))
         })
         return Promise.resolve(name + (Math.max(...nums) + 1))
-    })
+      })
   }
 
   createUserInFirestore(uid, userData) {
@@ -160,5 +168,38 @@ export class AuthService {
             .catch(error => Promise.reject(error))
         }).catch(error => Promise.reject(error))
       }).catch(error => Promise.reject(error))
+  }
+
+  addStudentToGoogleSheets(studentData) {
+    console.log("in add student to google sheets")
+    console.log(studentData);
+
+    studentRosterSheet.useServiceAccountAuth(creds)
+      .then(res => {
+        console.log("In useServiceAccountAUTH: ", res)
+      }).catch(error => console.log(error))
+
+    studentRosterSheet.loadInfo().then(res => {
+      console.log("In load info: ", res)
+    })
+
+    //await studentRosterSheet.loadInfo();
+
+    // (async () => {await studentRosterSheet.useServiceAccountAuth(creds);    
+    //   await studentRosterSheet.loadInfo();    
+    //   const sheet = studentRosterSheet.sheetsByIndex[1];    
+    //   const rows = await sheet.getRows();     
+    //   //rows = rows.map(a => a._rawData)    
+    //   console.log(rows);
+    // })()
+
+    // studentRosterSheet.useServiceAccountAuth(creds, function (err) {
+    //   console.log(creds)
+    //   studentRosterSheet.addRow(1, studentData, function (err) {
+    //     if (err) {
+    //       console.log(err);
+    //     }
+    //   });
+    // });
   }
 }

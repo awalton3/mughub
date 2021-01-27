@@ -28,15 +28,15 @@ export class RosterAddComponent implements OnInit {
     this.studentForm = new FormGroup({
       'firstName': new FormControl(null, Validators.required),
       'lastName': new FormControl(null, Validators.required),
+      'gradeLevel': new FormControl(null, Validators.required),
       'email': new FormControl(null, Validators.email),
       // 'subjects': new FormControl(null, Validators.required),
       'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
       'parentFirstName': new FormControl(null, Validators.required),
       'parentLastName': new FormControl(null, Validators.required),
       'parentEmail': new FormControl(null, Validators.email),
-      'gradeLevel': new FormControl(null),
+      'parentPhone': new FormControl(null, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
       'active': new FormControl(null)
-      // 'phone': new FormControl(null, [Validators.required, Validators.pattern("[0-9]{10}")])
     })
     // this.subjectForm = new FormGroup({
     //   'subject': new FormGroup(null, Validators.required),
@@ -46,6 +46,7 @@ export class RosterAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.listenForEditRequests();
+    this.dummyFunction();
   }
 
   listenForEditRequests() {
@@ -62,16 +63,25 @@ export class RosterAddComponent implements OnInit {
     this.authService.registerStudent({ ...this.studentForm.value, ...subjects })
       .then(onSuccess => {
         this.authService.onSuccess("Student added to roster")
+        console.log("added new student")
         this.closeDrawer()
       })
       .catch(error => console.log(error)) //need more action here
+  }
+
+  dummyFunction() {
+    this.authService.addStudentToGoogleSheets({
+      'col1': 'some data',
+      'col2': 'some data',
+      'col3': 'some data'
+    })
   }
 
   editStudent() {
     this.authService.getUserByUsername(this.studentToEdit.username)
       .then(userObj => {
         let subjects = { subjects: this.subjects }
-        this.authService.editUserInFirestore(userObj.docs[0].id, {...this.studentForm.value, ...subjects})
+        this.authService.editUserInFirestore(userObj.docs[0].id, { ...this.studentForm.value, ...subjects })
         this.authService.onSuccess("Student successfully updated")
         this.closeDrawer()
       })
