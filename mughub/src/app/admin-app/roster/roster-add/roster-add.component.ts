@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, ViewChild, ElementRef, Input } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
 import { RosterService, Student } from '../roster.service';
@@ -14,8 +14,8 @@ export class RosterAddComponent implements OnInit {
   @Output() onDrawerClose = new Subject();
   @Input() userType: string;
 
+  private subs = new Subscription();
   studentForm: FormGroup;
-  // subjectForm: FormGroup;
   isEditMode = false;
   studentToEdit: Student;
   subjects: Array<{ subject: string, tutor: string }> = [];
@@ -26,32 +26,41 @@ export class RosterAddComponent implements OnInit {
     private authService: AuthService,
     private rosterService: RosterService) {
 
+    //Initialize student form
     this.studentForm = new FormGroup({
       'firstName': new FormControl(null, Validators.required),
       'lastName': new FormControl(null, Validators.required),
       'gradeLevel': new FormControl(null, Validators.required),
       'email': new FormControl(null, Validators.email),
-      // 'subjects': new FormControl(null, Validators.required),
       'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
-      'parentFirstName': new FormControl(null),
-      'parentLastName': new FormControl(null),
+      'parentFirstName': new FormControl(null, Validators.required),
+      'parentLastName': new FormControl(null, Validators.required),
       'parentEmail': new FormControl(null, Validators.email),
       'parentPhone': new FormControl(null, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
       'active': new FormControl(null)
     })
-    // this.subjectForm = new FormGroup({
-    //   'subject': new FormGroup(null, Validators.required),
-    //   'tutor': new FormGroup(null, Validators.required)
-    // })
 
+    //Listen for edit requests
+    // this.subs.add(this.rosterService.onEditStudent.subscribe(student => {
+    //   console.log('in edit student')
+    //   this.studentToEdit = Object.assign({}, student)
+    //   this.isEditMode = true
+    //   this.studentForm.patchValue(student)
+    //   this.subjects = student.subjects
+    // }))
   }
 
   ngOnInit(): void {
     this.listenForEditRequests();
   }
 
+  ngOnDestroy(): void {
+    this.subs.unsubscribe()
+  }
+
   listenForEditRequests() {
     this.rosterService.onEditStudent.subscribe(student => {
+      console.log('in add student')
       this.studentToEdit = Object.assign({}, student)
       this.isEditMode = true
       this.studentForm.patchValue(student)
@@ -59,15 +68,28 @@ export class RosterAddComponent implements OnInit {
     })
   }
 
+  // addStudent() {
+  //   let subjects = { subjects: this.subjects }
+  //   this.authService.registerStudent({ ...this.studentForm.value, ...subjects })
+  //     .then(onSuccess => {
+  //       this.authService.addStudentToGoogleSheets(this.studentForm.value)
+  //         .then(onSuccess => {
+  //           this.authService.onSuccess("Student added to roster")
+  //           this.closeDrawer()
+  //         }).catch(error => console.log(error))
+  //     })
+  //     .catch(error => console.log(error)) //need more action here
+  // }
+
   addStudent() {
     let subjects = { subjects: this.subjects }
     this.authService.registerStudent({ ...this.studentForm.value, ...subjects })
       .then(onSuccess => {
-        this.authService.addStudentToGoogleSheets(this.studentForm.value)
-          .then(onSuccess => {
-            this.authService.onSuccess("Student added to roster")
-            this.closeDrawer()
-          }).catch(error => console.log(error))
+        return this.authService.addStudentToGoogleSheets(this.studentForm.value)
+      })
+      .then(onSuccess => {
+        this.authService.onSuccess("Student added to roster")
+        this.closeDrawer()
       })
       .catch(error => console.log(error)) //need more action here
   }

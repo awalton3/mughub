@@ -6,7 +6,6 @@ import { SnackBarService } from '../shared/snack-bar/snack-bar.service';
 import { Router } from '@angular/router';
 import { Student, Tutor } from '../admin-app/roster/roster.service';
 
-//const GoogleSpreadsheet = require('google-spreadsheet');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const studentRosterSheet = new GoogleSpreadsheet('1tvlO0a618AMi2DRs64_Z3V-GYd5YyPs5TSkPpPR5Fdk');
 const googleSheetCreds = require('../../assets/sheets/credentials.json');
@@ -17,7 +16,6 @@ const googleSheetCreds = require('../../assets/sheets/credentials.json');
 
 export class AuthService {
 
-  //user = new Subject<any>();
   constructor(
     private snackbarService: SnackBarService,
     private router: Router
@@ -25,21 +23,36 @@ export class AuthService {
 
   authref = firebase.firestore().collection('/users')
 
+  // login(username, password) {
+  //   firebase.auth().signInWithEmailAndPassword(username + "@placeholder.com", password)
+  //     .then(userObj => {
+  //       this.getUserFromFireCollect(userObj.user.uid)
+  //         .then(userData => {
+  //           let user = Object.assign({}, userData.data())
+  //           if (user.active == false) {
+  //             this.handleError('auth/user-disabled')
+  //             window.location.reload()
+  //           }
+  //           delete user.password
+  //           this.createUserSession(user)
+  //           this.router.navigate([user.type]);
+  //         }).catch(error => console.log(error))
+  //     }).catch(error => this.handleError(error.code))
+  // }
+
   login(username, password) {
     firebase.auth().signInWithEmailAndPassword(username + "@placeholder.com", password)
-      .then(userObj => {
-        this.getUserFromFireCollect(userObj.user.uid)
-          .then(userData => {
-            let user = Object.assign({}, userData.data())
-            if (user.active == false) {
-              this.handleError('auth/user-disabled')
-              window.location.reload()
-            }
-            delete user.password
-            this.createUserSession(user)
-            this.router.navigate([user.type]);
-          }).catch(error => console.log(error))
-      }).catch(error => this.handleError(error.code))
+      .then(userObj => { return this.getUserFromFireCollect(userObj.user.uid) })
+      .then(userData => {
+        let user = Object.assign({}, userData.data())
+        if (user.active == false) {
+          this.handleError('auth/user-disabled')
+          window.location.reload()
+        }
+        delete user.password
+        this.createUserSession(user)
+        this.router.navigate([user.type]);
+      }).catch(error => this.handleError(error))
   }
 
   registerInAuth(username, password) {
@@ -156,46 +169,76 @@ export class AuthService {
     return this.authref.doc(uid).update(Object.assign({}, userData))
   }
 
+  // registerStudent(student: Student) {
+  //   let base = (student.firstName + student.lastName).toLowerCase()
+  //   return this.generateUsername(base)
+  //     .then(username => {
+  //       this.registerInAuth(username, student.password).then(userObj => {
+  //         let other = { type: 'student', username: username, active: true }
+  //         this.createUserInFirestore(userObj.user.uid, { ...student, ...other })
+  //           .then(() => Promise.resolve() /* add student to tutor's profile */)
+  //           .catch(error => Promise.reject(error))
+  //       }).catch(error => Promise.reject(error))
+  //     }).catch(error => Promise.reject(error))
+  // }
+
   registerStudent(student: Student) {
     let base = (student.firstName + student.lastName).toLowerCase()
+    let username;
     return this.generateUsername(base)
-      .then(username => {
-        this.registerInAuth(username, student.password).then(userObj => {
-          let other = { type: 'student', username: username, active: true }
-          this.createUserInFirestore(userObj.user.uid, { ...student, ...other })
-            .then(() => Promise.resolve() /* add student to tutor's profile */)
-            .catch(error => Promise.reject(error))
-        }).catch(error => Promise.reject(error))
-      }).catch(error => Promise.reject(error))
+      .then(respUsername => {
+        username = respUsername
+        return this.registerInAuth(username, student.password)
+      })
+      .then(userObj => {
+        let other = { type: 'student', username: username, active: true }
+        return this.createUserInFirestore(userObj.user.uid, { ...student, ...other })
+      })
+      .then(() => Promise.resolve())
+      .catch(error => Promise.reject(error))
   }
 
   registerTutor(tutor: Tutor) {
     console.log(tutor);
     let base = (tutor.firstName + tutor.lastName).toLowerCase()
+    let username;
+
     return this.generateUsername(base)
-      .then(username => {
-        console.log(username)
-        this.registerInAuth(username, tutor.password).then(userObj => {
-          let other = { type: 'tutor', username: username, active: true }
-          this.createUserInFirestore(userObj.user.uid, { ...tutor, ...other })
-            .then(() => Promise.resolve())
-            .catch(error => Promise.reject(error))
-        }).catch(error => Promise.reject(error))
-      }).catch(error => Promise.reject(error))
+      .then(respUsername => {
+        username = respUsername
+        return this.registerInAuth(username, tutor.password)
+      })
+      .then(userObj => {
+        let other = { type: 'tutor', username: username, active: true }
+        return this.createUserInFirestore(userObj.user.uid, { ...tutor, ...other })
+      })
+      .then(() => Promise.resolve())
+      .catch(error => Promise.reject(error))
   }
- addStudentToGoogleSheets(studentData) {
+  //  addStudentToGoogleSheets(studentData) {
+  //     return studentRosterSheet.useServiceAccountAuth(googleSheetCreds)
+  //       .then(() => {
+  //         studentRosterSheet.loadInfo().then(() => {
+  //           let sheet = studentRosterSheet.sheetsByTitle['roster-student']
+  //           console.log(sheet)
+  //           //if !sheet create the sheet here
+  //           sheet.addRow(studentData)
+  //             .then(() => Promise.resolve())
+  //             .catch(error => Promise.reject(error))
+  //         }).catch(error => Promise.reject(error))
+  //       }).catch(error => Promise.reject(error))
+  //  }
+  addStudentToGoogleSheets(studentData) {
     return studentRosterSheet.useServiceAccountAuth(googleSheetCreds)
+      .then(() => { return studentRosterSheet.loadInfo() })
       .then(() => {
-        studentRosterSheet.loadInfo().then(() => {
-          let sheet = studentRosterSheet.sheetsByTitle['roster-student']
-          console.log(sheet)
-          //if !sheet create the sheet here
-          sheet.addRow(studentData)
-            .then(() => Promise.resolve())
-            .catch(error => Promise.reject(error))
-        }).catch(error => Promise.reject(error))
-      }).catch(error => Promise.reject(error))
- }
+        let sheet = studentRosterSheet.sheetsByTitle['roster-student']
+        return sheet.addRow(studentData)
+      })
+      .then(() => Promise.resolve())
+      .catch(error => Promise.reject(error))
+  }
+
   logout() {
     if (confirm('Are you sure you would like to logout?')) {
       this.clearUserSession()

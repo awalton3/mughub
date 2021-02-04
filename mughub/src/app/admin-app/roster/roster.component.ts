@@ -56,16 +56,18 @@ export class RosterComponent implements OnInit, OnDestroy {
 
   editStudent(student: Student) {
     //send drawer component the data to edit
-    this.userType = 'student';
     this.rosterService.onEditStudent.next(student)
+
+    this.userType = 'student';
+
     this.editor.open()
   }
 
   editTutor(tutor: Tutor) {
-    //send drawer component the data to edit
-    this.rosterService.onEditTutor.next(tutor)
     this.userType = 'tutor';
     this.editor.open()
+    //send drawer component the data to edit
+    this.rosterService.onEditTutor.next(tutor)
   }
 
   closeSidenav() {

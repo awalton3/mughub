@@ -26,7 +26,7 @@
           </div>
           <br>
           <app-roster-table *ngIf="dataStudents" [data]="dataStudents" [displayedColumns]="displayedColumns"
-            (onRowClick)="editStudent($event)" class="widthFullPer"></app-roster-table>
+            (onRowClick)="editor.open(); editStudent($event)" class="widthFullPer"></app-roster-table>
 
           <!-- Empty State - No data to display -->
           <div *ngIf="!dataStudents" class=loader>loading...</div>
@@ -58,7 +58,7 @@
           </div>
           <br>
           <app-roster-table *ngIf="dataTutors" [data]="dataTutors" [displayedColumns]="displayedColumns"
-            (onRowClick)="editTutor($event)" class="widthFullPer"></app-roster-table>
+            (onRowClick)="editor.open(); editTutor($event)" class="widthFullPer"></app-roster-table>
 
           <!-- Empty State - No data to display -->
           <div *ngIf="!dataTutors" class=loader>loading...</div>

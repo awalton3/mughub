@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 // import { map } from 'rxjs/operators';
 
 
@@ -36,8 +36,8 @@ export class RosterService {
 
   constructor() {}
 
-  onEditStudent = new Subject<Student>();
-  onEditTutor = new Subject<Tutor>();
+  onEditStudent = new BehaviorSubject(undefined);
+  onEditTutor = new BehaviorSubject(undefined);
 
   getStudents() {
     return new Observable(observer => {

@@ -31,10 +31,12 @@ export class RosterAddTutorComponent implements OnInit {
 
   ngOnInit(): void {
     this.listenForEditRequests();
+    console.log('drawer-initialized')
   }
 
   listenForEditRequests() {
     this.rosterService.onEditTutor.subscribe(tutor => {
+      console.log('editing tutor')
       this.tutorToEdit = Object.assign({}, tutor)
       this.isEditMode = true
       this.tutorForm.patchValue(tutor)
@@ -53,7 +55,9 @@ export class RosterAddTutorComponent implements OnInit {
   editTutor() {
     this.authService.getUserByUsername(this.tutorToEdit.username)
       .then(userObj => {
-        this.authService.editUserInFirestore(userObj.docs[0].id, { ...this.tutorForm.value })
+        return this.authService.editUserInFirestore(userObj.docs[0].id, { ...this.tutorForm.value })
+      })
+      .then(() => {
         this.authService.onSuccess("Tutor successfully updated")
         this.closeDrawer()
       })
@@ -70,5 +74,4 @@ export class RosterAddTutorComponent implements OnInit {
     console.log(this.tutorForm.value)
     this.isEditMode ? this.editTutor() : this.addTutor()
   }
-
 }
